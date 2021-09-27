@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-client = MongoClient("mongodb://localhost:27017/")
-db = client.dbStock
+#client = MongoClient("mongodb://localhost:27017/")
+#db = client.dbStock
 
 
 @app.route('/')
