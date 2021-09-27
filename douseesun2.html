@@ -55,10 +55,26 @@
         .map img {
             margin: 30px 65px;
         }
+        .time-menu {
+            display: flex;
+            width: 100%;
+            /*background-color: aquamarine;*/
+            align-items: center;
+        }
+        .time {
+            font-size: 25px;
+            display: block;
+        }
+        .time span {
+            background-color: #fdf3d0;
+        }
+        .time strong {
+            margin-left: 10px;
+        }
         /*정렬순서*/
         .sub-menu {
             width: 100px;
-            float: right;
+            margin-left: 176px;
         }
         /*review 목록*/
         .review {
@@ -103,13 +119,18 @@
                 <div class="map">
                     <img src="https://cdn.pixabay.com/photo/2013/07/13/14/05/location-162102__340.png" alt="map">
                 </div>
-                <div class="sub-menu">
-                    <select class="form-control" >
-                      <option>인기순</option>
-                      <option>추천순</option>
-                      <option>최신순</option>
-                      <option>별점순</option>
-                    </select>
+                <div class="time-menu">
+                    <div class="time">
+                        <span>일출</span><strong>6:00</strong> <span>일몰</span><strong>18:00</strong>
+                    </div>
+                    <div class="sub-menu">
+                        <select class="form-control" >
+                          <option>인기순</option>
+                          <option>추천순</option>
+                          <option>최신순</option>
+                          <option>별점순</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="review">
