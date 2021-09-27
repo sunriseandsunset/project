@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>해보러갈래?</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Jua', sans-serif;
+            margin: 0;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+          list-style: none;
+            margin: 5px auto;
+        }
+        a {
+            color: black;
+            /*color: #fdf3d0;*/
+        }
+        .wrap {
+            width: 1000px;
+            margin: auto;
+        }
+        .title {
+            text-align: center;
+        }
+        .alert-link {
+            font-size: 40px;
+        }
+        .content:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+        .content {
+            margin-top: 50px;
+        }
+        /*카테고리*/
+        .menu {
+            width: 33.3333%;
+            float: left;
+        }
+        .carte {
+            width: 100%;
+            text-align: center;
+        }
+        /*중앙이미지*/
+        .image {
+            width: 33.3333%;
+            float: left;
+        }
+        #img {
+            width: 330px;
+            box-sizing: border-box;
+            height: auto;
+        }
+        /*로그인*/
+        .login {
+            width: 33.3333%;
+            float: left;
+        }
+        .login-in {
+            width: 250px;
+            margin: auto;
+        }
+        .login-btn {
+            width: 250px;
+            margin: auto;
+        }
+        /*검색*/
+        .select {
+            width: 300px;
+            margin: auto;
+        }
+        #search {
+            margin-top: 50px;
+        }
+        option {
+            text-align: center;
+        }
+        /*명소*/
+        .place {
+            /*border: 2px solid black;*/
+            background-color: #fdf3d0;
+            width: 1000px;
+            height: 250px;
+            margin: 50px auto 0 auto;
+        }
+        .place p {
+            text-align: center;
+            font-size: 25px;
+            padding-top: 10px;
+        }
+        .fictures {
+            display: flex;
+        }
+        .ficture {
+            border: 2px solid black;
+            width: 150px;
+            height: 100px;
+            margin: 20px 20px 0 20px;
+        }
+        .ficture img {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .next {
+            margin-top: 55px;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title">
+            <div class="alert alert-warning" role="alert">
+                <a href="#" class="alert-link">해보러갈래?</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="menu">
+                <div class="carte">
+                    <h4>카테고리</h4>
+                    <ul>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">리뷰 모아보기</a></li>
+                        <li><a href="#">찜 목록 보기</a></li>
+                        <li><a href="#">채팅</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image">
+                <img src="https://cdn.pixabay.com/photo/2014/04/03/11/57/sun-312708__340.png" alt="sun" id="img">
+            </div>
+            <div class="login">
+                <div class="login-in">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2">@</span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="login-btn">
+                    <button type="button" class="btn btn-outline-warning">로그인</button>
+                </div>
+            </div>
+        </div>
+        <div class="select">
+            <div class="input-group" id="search">
+                <select class="custom-select" id="inputGroupSelect04">
+                    <option selected>--------- 지역 선택 ---------</option>
+                    <option value="1">서울</option>
+                    <option value="2">인천</option>
+                    <option value="3">수원</option>
+                    <option value="4">강릉</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">검색</button>
+                </div>
+            </div>
+        </div>
+        <div class="place">
+            <p>이번주 인기명소(게시물) Top 5</p>
+            <div class="fictures">
+                <div class="ficture fir">
+                    <img src="https://cdn.pixabay.com/photo/2013/11/28/10/03/river-219972__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture sec">
+                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture thr">
+                    <img src="https://cdn.pixabay.com/photo/2019/12/17/10/15/sun-4701316__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture fou">
+                    <img src="https://cdn.pixabay.com/photo/2020/02/16/20/03/sunrising-in-argentina-4854652__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture fif">
+                    <img src="https://cdn.pixabay.com/photo/2018/05/16/12/30/sunrise-3405674__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <span class="next"><a href="#">▶</a></span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
