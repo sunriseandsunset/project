@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map_SunriseSunset</title>
+
+
+    <style>
+
+        .mytitle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            width: 300px;
+            height: 40px;
+
+            border: 2px solid #e8344e;
+
+            text-decoration: none;
+            text-align: center; 
+
+            line-height: 40px;
+
+            color:  #e8344e;
+            font-weight: bold;
+
+            border-radius: 40px;
+        }    
+
+        .btn:hover {
+            background-color:  #e8344e;
+            color: white;
+
+        }
+
+        .box {
+            width: 1000px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin: 40px auto 0px auto;
+        }
+
+        .map {
+            width: 500px;
+            height: 500px;
+
+            margin-right: 30px;
+            border-radius: 24px;
+        }
+
+        .story {
+            width: 500px;
+            height: 500px;
+      
+        }
+
+
+        @media screen and (max-width: 640px) {
+            h1 {
+                font-size: 26px;
+            }
+
+            .box {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .map {
+                width: 100%;
+                height: 200px;
+
+                margin: 0;
+            }
+
+
+
+        }       
+
+    </style>
+
+</head>
+<body>
+
+    <div class="box">
+        <div class="map" id="map"></div>
+        <div class="story">
+            <h2>주문진남애일출</h2>
+            <h3>강원 양양군 현남면 남애리 2-2 남애항</h3>
+            <p>
+                내용요약-리뷰
+            </p>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=535068688f1a8bca1c21a9445ede0a89"></script>
+    <script>
+        var markerPosition = new kakao.maps.LatLng(37.572679571898625, 126.9756295553571)
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+            mapOption = { 
+                center: markerPosition, // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        var imageSrc = "https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/2021_05_free_parents/sparta-marker.png"; 
+        var imageSize = new kakao.maps.Size(65, 86); 
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+        
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: markerPosition,
+            image : markerImage
+        });
+
+    </script>
+</body>
+</html>
