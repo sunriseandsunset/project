@@ -90,14 +90,12 @@
             width: 1000px;
             margin: auto;
         }
-        /*헤더*/
         .title {
             text-align: center;
         }
         .alert-link {
             font-size: 40px;
         }
-        /*컨텐츠*/
         .content:after {
             display: block;
             content: "";
@@ -183,15 +181,9 @@
         .next {
             margin-top: 55px;
         }
+
+
     </style>
-    <script>
-        function seocondpage() {
-            let place = $('#inputGroupSelect04').val()
-            if (place != 0) {
-                window.location='douseesun2.html'
-            }
-        }
-    </script>
 
 
 </head>
@@ -247,15 +239,14 @@
         <div class="select">
             <div class="input-group" id="search">
                 <select class="custom-select" id="inputGroupSelect04">
-                    <option selected value="0">--------- 지역 선택 ---------</option>
+                    <option selected>--------- 지역 선택 ---------</option>
                     <option value="1">서울</option>
                     <option value="2">인천</option>
                     <option value="3">수원</option>
                     <option value="4">강릉</option>
-                    <option value="5">강원도</option>
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"onclick="seocondpage()">검색</button>
+                    <button class="btn btn-outline-secondary" type="button">검색</button>
                 </div>
             </div>
         </div>
@@ -297,6 +288,8 @@
         </div>
 
     </div>
+
+
 </body>
 
 </html>
