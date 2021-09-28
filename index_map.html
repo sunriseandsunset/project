@@ -6,71 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 지도 </title>
 
-
     <style>
 
-        .map {
-            width: 500px;
-            height: 500px;
+        /*.map {*/
+        /*    width: 500px;*/
+        /*    height: 500px;*/
 
-            margin-right: 30px;
-            border-radius: 4px;
-        }
-
-        .story {
-            width: 500px;
-            height: 500px;
-
-        }
-
-        .story > h2 {
-            margin: 20px 0 0 0px;
-            color: black;
-        }
-
-        .story > h3 {
-            margin: 5px 0px 0px 0px;
-            font-size: 16px;
-            color: gray;
-
-            font-weight: normal;
-        }
-
-        .story > p {
-            line-height: 24px;
-        }
-
-        @media screen and (max-width: 640px) {
-            h1 {
-                font-size: 26px;
-            }
+        /*    margin-right: 30px;*/
+        /*    border-radius: 4px;*/
+        /*}*/
 
 
-            .map {
-                width: 100%;
-                height: 200px;
 
-                margin: 0;
-            }
+        /*@media screen and (max-width: 640px) {*/
+        /*    h1 {*/
+        /*        font-size: 26px;*/
+        /*    }*/
 
-            .story {
-                width: 100%;
-                height: auto;
 
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
+        /*    .map {*/
+        /*        width: 100%;*/
+        /*        height: 200px;*/
 
-        }
+        /*        margin: 0;*/
+        /*    }*/
+        /*    */
+
+        /*}*/
 
     </style>
 
 </head>
 <body>
-        <div class="map" id="map"></div>
-        <div class="story">
+<!--        <div class="map" id="map"></div>-->
+        <div id="map" style="width:100%;height:350px;"></div>
+        <div>
             <h2>응봉산 팔각정</h2>
-            <h3>서울 성동구 독서당로60길 13-1 (우)04742</h3>
+            <h4>서울 성동구 독서당로60길 13-1 (우)04742</h4>
             <p class="desc">
                 야경 너무 좋은데 차량 접근성이 극헬..
 
@@ -79,7 +51,7 @@
 
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=535068688f1a8bca1c21a9445ede0a89"></script>
     <script>
-        var markerPosition = new kakao.maps.LatLng(37.548833534804594, 127.03098184010018)
+        var markerPosition = new kakao.maps.LatLng(37.5487995100448, 127.03092283153828)
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
                 center: markerPosition, // 지도의 중심좌표
@@ -91,17 +63,22 @@
         // 마커를 표시할 위치와 title 객체 배열입니다
         var positions = [
             {
-                title: '생태연못',
-                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+                title: '하조대',
+                latlng: new kakao.maps.LatLng(38.0213614033835, 128.73525609965975)
             },
             {
-                title: '텃밭',
-                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+                title: '민머루해수욕장',
+                latlng: new kakao.maps.LatLng(37.651482707208324, 126.3335379998638)
             },
             {
-                title: '근린공원',
-                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+                title: '하늘공원',
+                latlng: new kakao.maps.LatLng(37.567633768859054, 126.88539062477679)
+            },
+            {
+                title: '응봉산 팔각정',
+                latlng: new kakao.maps.LatLng(37.5487995100448, 127.03092283153828)
             }
+
         ];
 
 
@@ -117,7 +94,7 @@
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
                 map: map,  // 마커를 표시할 지도
-                position: markerPosition, // 마커를 표시할 위치
+                position: positions[i].latlng, // 마커를 표시할 위치
                 title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 image: markerImage // 마커 이미지
             });
