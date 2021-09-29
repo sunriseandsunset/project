@@ -35,6 +35,11 @@ def show_place():
 
         return render_template('douseesun2.html',data=want,places=places)
 
+@app.route('/http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=', methods=['GET'])
+def get_time():
+    title_receive = request.args.get('xmlParsing')
+    print(title_receive)
+    return jsonify({'result': 'success', 'msg': '이 요청은 GET!'})
 
     '''
     else:
@@ -49,8 +54,6 @@ def show_place():
 
         return render_template('douseesun2.html', place_data=jsonify(places))
     '''
-
-
 
 
 
