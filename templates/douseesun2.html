@@ -113,7 +113,7 @@
     </style>
 
     <title>해보러갈래?</title>
-    <script src="/static/show_place.js"></script>
+    <!--<script src="/static/show_place.js"></script>-->
 </head>
     <body>
         <div class="wrap">
@@ -151,11 +151,29 @@
                         <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
                     </div>
                 </div>
+
             </div>
         </div>
 
 
         </div>
+
+   <table class="table">
+        <tr>
+            <th>명소이름</th>
+            <th>경도</th>
+            <th>위도</th>
+        </tr>
+        {% for obj in places%}
+        <tbody>
+            <tr>
+                <td>{{obj.name}}</td>
+                <td>{{obj.longtitude}}</td>
+                <td>{{obj.latitude}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
 
     </body>
 </html>
