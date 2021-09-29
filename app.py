@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request,redirect,url_for
 from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
+import json
 
 app = Flask(__name__)
 
@@ -29,14 +30,16 @@ def show_place():
         want = request.form.get('inputGroupSelect04')
         #print(want)
         places = db.sample.find({"address": want}, {'_id': False})
+
         places=list(places)
-        print(places)
-        return render_template('douseesun2.html',data=want,places=list(places))
+
+        return render_template('douseesun2.html',data=want,places=places)
+
 
     '''
     else:
         want = request.args.get('give_place')
-        # area = request.args.get('inputGroupSelect04')
+        #area = request.args.get('in putGroupSelect04')
         print(want)
         places = db.sample.find({"address": want}, {'_id': False})
         places = list(places)
