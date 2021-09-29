@@ -4,8 +4,9 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -121,8 +122,8 @@
                 <p>{{ data }}</p>
             </div>
             <div class="content">
-                <div class="map">
-                    <img src="https://cdn.pixabay.com/photo/2013/07/13/14/05/location-162102__340.png" alt="map">
+                <div class="map" id="map">
+
                 </div>
                 <div class="time-menu">
                     <div class="time">
@@ -174,6 +175,73 @@
         </tbody>
         {% endfor %}
     </table>
+
+
+
+    <script src="https://d3js.org/d3.v5.js"></script>
+      <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=535068688f1a8bca1c21a9445ede0a89"></script>
+    <script>
+        var array = {{places | tojson}};
+
+        var markerPosition = new kakao.maps.LatLng(array[0]['latitude'], array[0]['longtitude'])
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: markerPosition, // 지도의 중심좌표
+                level: 9 // 지도의 확대 레벨
+            };
+
+         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+         var positions = new Array();
+
+
+         for (let i = 0; i < array.length; i++) {
+             let now_name = array[i]['name'];
+             let now_long = array[i]['longtitude'];
+             let now_lati = array[i]['latitude'];
+             var now_dict={
+                 title: now_name,
+                 latlng: new kakao.maps.LatLng(now_lati,now_long)
+             }
+             console.log(now_dict)
+             positions.push(now_dict)
+
+
+         }
+         console.log(positions)
+
+
+
+
+        // 마커를 표시할 위치와 title 객체 배열입니다
+        /*var positions = [
+            {
+                title: '하조대',
+                latlng: new kakao.maps.LatLng(38.0213614033835, 128.73525609965975)
+            },
+
+        ];*/
+
+        //자바스크립트 배열에 넣어주기
+
+        // 마커 이미지의 이미지 주소입니다
+        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+        for (var i = 0; i < positions.length; i ++) {
+
+            var imageSize = new kakao.maps.Size(24, 35);    // 마커 이미지의 이미지 크기 입니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  // 마커 이미지를 생성합니다
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map,  // 마커를 표시할 지도
+                position: positions[i].latlng, // 마커를 표시할 위치
+                title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                image: markerImage // 마커 이미지
+            });
+        }
+    </script>
+
+
 
     </body>
 </html>
