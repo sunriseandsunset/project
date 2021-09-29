@@ -185,13 +185,14 @@
         }
     </style>
     <script>
-        function seocondpage() {
+      <!--  function seocondpage() {
             let place = $('#inputGroupSelect04').val()
             if (place != 0) {
                 window.location='douseesun2.html'
             }
-        }
+        }-->
     </script>
+    <script src="/static/get_area.js"></script>
 
 
 </head>
@@ -244,21 +245,25 @@
 
             </div>
         </div>
+        <form action = "http://localhost:5000/place" method = "POST" name="selectarea">
         <div class="select">
             <div class="input-group" id="search">
-                <select class="custom-select" id="inputGroupSelect04">
+                <select class="custom-select" name="inputGroupSelect04">
                     <option selected value="0">--------- 지역 선택 ---------</option>
                     <option value="1">서울</option>
                     <option value="2">인천</option>
                     <option value="3">수원</option>
                     <option value="4">강릉</option>
-                    <option value="5">강원도</option>
+                    <option value="강원도">강원도</option>
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"onclick="seocondpage()">검색</button>
+
+                    <button class="btn btn-outline-secondary" type="submit" name="submit" value="success">검색</button>
+
                 </div>
             </div>
         </div>
+        </form>
         <div class="place">
             <p>이번주 인기명소(게시물) Top 5</p>
             <div class="fictures">

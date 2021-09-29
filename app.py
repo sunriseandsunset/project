@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request,redirect,url_for
 from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
@@ -10,7 +10,7 @@ db = client.dbproject
 
 @app.route('/')
 def index():
-    return render_template('douseesun2.html')
+    return render_template('douseesun.html')
 
 '''
 
@@ -21,16 +21,35 @@ def get_place():
     return jsonify({'result':'sucess','msg':'지역 선택!'})
 '''
 
-#장소 데이터 api 가져오기
-@app.route('/place',methods=['GET'])
+#지역별 명소 데이터 api 가져오기
+@app.route('/place',methods=['GET','POST'])
 def show_place():
     #선택한지역 넘겨주기
-    area = request.args.get('give_place')
-    print(area)
-    places = db.sample.find({"address": area}, {'_id': False})
-    places=list(places)
-    print(jsonify(places))
-    return jsonify(places)
+    if request.method == 'POST':
+        want = request.form.get('inputGroupSelect04')
+        print(want)
+        return render_template('douseesun2.html',data=want)
+    '''   
+    else:
+        area = request.args.get('give_area')
+        print(area)
+        places = db.sample.find({"address": area}, {'_id': False})
+        places=list(places)
+        print(jsonify(places))
+        #return jsonify(places)
+
+        return render_template('douseesun2.html', data=area)
+
+'''
+'''
+@app.route('/success')
+def secondpage():
+    #선택한지역 넘겨주기
+    #area = request.args.get('give_area')
+    return render_template('douseesun2.html', data=area)
+
+'''
+
 
 
 
