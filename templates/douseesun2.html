@@ -210,8 +210,6 @@
          console.log(positions)
 
 
-
-
         // 마커를 표시할 위치와 title 객체 배열입니다
         /*var positions = [
             {
@@ -239,6 +237,64 @@
                 image: markerImage // 마커 이미지
             });
         }
+
+        // 지도에 클릭 이벤트를 등록합니다
+        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+            // 클릭한 위도, 경도 정보를 가져옵니다
+            var latlng = mouseEvent.latLng;
+
+            var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+            message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+            var resultDiv = document.getElementById('result');
+            resultDiv = message;
+            console.log(latlng.getLat(),latlng.getLng())
+        });
+
+
+
+        // function show() {
+        //  console.log("test");
+        //  var longitude = $("#longitude").val();
+        //  var latitude = $("#latitude").val();
+        //  var date = $("#locdate").val();
+        //  console.log(longitude)
+        //  console.log(latitude)
+        //  console.log(date)
+
+
+     //     $.ajax({
+     //         type: "GET",
+     //         url: "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=" + longitude + "&latitude=" + latitude + "&locdate=" + date + "&dnYn=N&ServiceKey=/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg==",
+     //         dataType: 'xml',
+     //         success: function (response) {
+     //             xmlParsing(response);
+     //
+     //         },
+     //         error: function (xhr, status, msg) { // 통신 실패시 호출해야하는 함수
+     //             console.log('상태값 : ' + status + ' Http에러메시지 : ' + msg);
+     //         },
+     //
+     //     });
+     // }
+
+     // function xmlParsing(data) {
+     //     var infoList = ``;
+     //     console.log(data)
+     //     $(data).find('items').each(function (index, item) {
+     //
+     //
+     //         infoList += `
+		// 		<div class="time">
+     //                    <span>일출</span><strong>6:00</strong> <span>일몰</span><strong>18:00</strong>
+     //            </div>
+		// 	`;
+     //         $('#info').empty().append(infoList);
+     //
+     //     });
+     // }
     </script>
 
 
