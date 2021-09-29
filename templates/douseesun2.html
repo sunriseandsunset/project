@@ -118,7 +118,7 @@
     <body>
         <div class="wrap">
             <div class="header">
-                <p>위치명</p>
+                <p>{{ data }}</p>
             </div>
             <div class="content">
                 <div class="map">
@@ -153,7 +153,7 @@
                 </div>
             </div>
         </div>
-            <p><input id="place" type="text" placeholder="지역명"></p>
+
           <button type="button" onclick="show()" class="btn btn-primary btn-order">test</button>
         <div class="input-box">
                 <table class="table">
@@ -167,6 +167,9 @@
                     <tbody id="info">
                     </tbody>
                 </table>
+            <h2>전달 데이터</h2> hello {{data }} !!
+
+
         </div>
 
     </body>
