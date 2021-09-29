@@ -12,13 +12,19 @@ db = client.dbproject
 def index():
     return render_template('douseesun2.html')
 
+'''
 
-
-
+@app.route('/place',methods=['POST'])
+def get_place():
+    area_receive=request.form['place_give']
+    
+    return jsonify({'result':'sucess','msg':'지역 선택!'})
+'''
 
 #장소 데이터 api 가져오기
 @app.route('/place',methods=['GET'])
 def show_place():
+    #선택한지역 넘겨주기
     area = request.args.get('give_place')
     print(area)
     places = db.sample.find({"address": area}, {'_id': False})
@@ -26,12 +32,7 @@ def show_place():
     print(jsonify(places))
     return jsonify(places)
 
-@app.route('/place',methods=['POST'])
-def get_place():
-    area_receive=request.form['place_give']
-    print(area_receive)
-    return jsonify({'result':'sucess','msg':'지역 선택!'})
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000,debug=True)
