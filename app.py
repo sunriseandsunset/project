@@ -27,28 +27,26 @@ def show_place():
     #선택한지역 넘겨주기
     if request.method == 'POST':
         want = request.form.get('inputGroupSelect04')
-        print(want)
-        return render_template('douseesun2.html',data=want)
-    '''   
-    else:
-        area = request.args.get('give_area')
-        print(area)
-        places = db.sample.find({"address": area}, {'_id': False})
+        #print(want)
+        places = db.sample.find({"address": want}, {'_id': False})
         places=list(places)
-        print(jsonify(places))
-        #return jsonify(places)
+        print(places)
+        return render_template('douseesun2.html',data=want,places=list(places))
 
-        return render_template('douseesun2.html', data=area)
+    '''
+    else:
+        want = request.args.get('give_place')
+        # area = request.args.get('inputGroupSelect04')
+        print(want)
+        places = db.sample.find({"address": want}, {'_id': False})
+        places = list(places)
+        print(places)
 
-'''
-'''
-@app.route('/success')
-def secondpage():
-    #선택한지역 넘겨주기
-    #area = request.args.get('give_area')
-    return render_template('douseesun2.html', data=area)
+   
 
-'''
+        return render_template('douseesun2.html', place_data=jsonify(places))
+    '''
+
 
 
 

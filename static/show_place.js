@@ -1,9 +1,17 @@
+
+$(document).ready(function () {
+
+            show(
+
+            );
+        });
+
 function show(){
 
-            let want_place=$("#place").val()
+
             $.ajax({
                 type: 'GET',
-                url: "/place?give_place="+want_place,
+                url: "/place",
                 data: {},
 
 
