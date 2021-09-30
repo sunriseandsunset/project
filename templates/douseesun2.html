@@ -61,24 +61,30 @@
         /*일몰,일출 시간*/
         .time-menu {
             display: flex;
+            position: relative;
             width: 100%;
             /*background-color: aquamarine;*/
             align-items: center;
+            height: 30px;
         }
         .time {
+            position: absolute;
             font-size: 25px;
             display: block;
+            top: 0px;
         }
         .time span {
             background-color: #fdf3d0;
         }
         .time strong {
-            margin-left: 10px;
+            margin:0 10px;
         }
         /*정렬순서*/
         .sub-menu {
+            position: absolute;
             width: 100px;
-            margin-left: 176px;
+            right: 0px;
+            top: 0px;
         }
         /*명소 목록*/
         .review {
@@ -127,7 +133,7 @@
                 </div>
                 <div class="time-menu">
                     <div class="time">
-                        <span>일출</span><strong>6:00</strong> <span>일몰</span><strong>18:00</strong>
+                        <span>일출: </span><strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong> <span>일몰: </span><strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>
                     </div>
                     <div class="sub-menu">
                         <select class="form-control" >
@@ -157,24 +163,9 @@
         </div>
 
 
-        </div>
 
-   <table class="table">
-        <tr>
-            <th>명소이름</th>
-            <th>경도</th>
-            <th>위도</th>
-        </tr>
-        {% for obj in places%}
-        <tbody>
-            <tr>
-                <td>{{obj.name}}</td>
-                <td>{{obj.longtitude}}</td>
-                <td>{{obj.latitude}}</td>
-            </tr>
-        </tbody>
-        {% endfor %}
-    </table>
+
+
 
 
 
@@ -202,29 +193,21 @@
                  title: now_name,
                  latlng: new kakao.maps.LatLng(now_lati,now_long)
              }
-             console.log(now_dict)
+
              positions.push(now_dict)
 
 
          }
-         console.log(positions)
+        // console.log(positions)
 
 
-        // 마커를 표시할 위치와 title 객체 배열입니다
-        /*var positions = [
-            {
-                title: '하조대',
-                latlng: new kakao.maps.LatLng(38.0213614033835, 128.73525609965975)
-            },
 
-        ];*/
 
-        //자바스크립트 배열에 넣어주기
 
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-        for (var i = 0; i < positions.length; i ++) {
+        for (var i = 0; i < positions.length; i++) {
 
             var imageSize = new kakao.maps.Size(24, 35);    // 마커 이미지의 이미지 크기 입니다
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  // 마커 이미지를 생성합니다
@@ -234,68 +217,104 @@
                 map: map,  // 마커를 표시할 지도
                 position: positions[i].latlng, // 마커를 표시할 위치
                 title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                image: markerImage // 마커 이미지
+                image: markerImage, // 마커 이미지
+                clickable: true,
+
             });
+
+
+            kakao.maps.event.addListener(marker, 'click', function () {
+                //마커클릭이벤트
+
+                var long = marker.getPosition().getLng();
+                var lati = marker.getPosition().getLat();
+
+                console.log(long.lati)
+
+                function getCurrentDate() {
+                    var date = new Date();
+                    var year = date.getFullYear().toString();
+
+                    var month = date.getMonth() + 1;
+                    month = month < 10 ? '0' + month.toString() : month.toString();
+
+                    var day = date.getDate();
+                    day = day < 10 ? '0' + day.toString() : day.toString();
+
+                    return year + month + day;
+                }
+                var date=getCurrentDate();
+
+                //alert(date)
+                show(long, lati,date);
+
+
+                function show(longitude, latitude,date) {
+
+                    console.log(longitude)
+                    console.log(latitude)
+                    console.log(window.location.origin)
+
+
+
+                    $.ajax({
+                        type: "GET",
+                        url: "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=" + longitude + "&latitude=" + latitude + "&locdate=" + date + "&dnYn=y&ServiceKey=/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg==",
+                        dataType: 'xml',
+                        success: function (response) {
+
+                            xmlParsing(response);
+
+
+                        },
+                        error: function (xhr, status, msg) { // 통신 실패시 호출해야하는 함수
+                            console.log('상태값 : ' + status + ' Http에러메시지 : ' + msg);
+                        },
+
+                    });
+                }
+
+                function xmlParsing(data) {
+                    var infoList = ``;
+
+                    $(data).find('items').each(function (index, item) {
+
+
+                        infoList += `
+                        <span>일출</span><strong>${$(this).find('sunrise').text()}/strong> <span>일몰</span><strong>${$(this).find('sunset').text()}</strong>
+                `;
+                        console.log(infoList);
+                         $('.time').empty().append(infoList);
+
+                    });
+                }
+
+
+            });
+
+
         }
 
-        // 지도에 클릭 이벤트를 등록합니다
-        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-
-            // 클릭한 위도, 경도 정보를 가져옵니다
-            var latlng = mouseEvent.latLng;
-
-            var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-            message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-            var resultDiv = document.getElementById('result');
-            resultDiv = message;
-            console.log(latlng.getLat(),latlng.getLng())
-        });
 
 
 
-        // function show() {
-        //  console.log("test");
-        //  var longitude = $("#longitude").val();
-        //  var latitude = $("#latitude").val();
-        //  var date = $("#locdate").val();
-        //  console.log(longitude)
-        //  console.log(latitude)
-        //  console.log(date)
 
-
-     //     $.ajax({
-     //         type: "GET",
-     //         url: "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=" + longitude + "&latitude=" + latitude + "&locdate=" + date + "&dnYn=N&ServiceKey=/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg==",
-     //         dataType: 'xml',
-     //         success: function (response) {
-     //             xmlParsing(response);
-     //
-     //         },
-     //         error: function (xhr, status, msg) { // 통신 실패시 호출해야하는 함수
-     //             console.log('상태값 : ' + status + ' Http에러메시지 : ' + msg);
-     //         },
-     //
-     //     });
-     // }
-
-     // function xmlParsing(data) {
-     //     var infoList = ``;
-     //     console.log(data)
-     //     $(data).find('items').each(function (index, item) {
-     //
-     //
-     //         infoList += `
-		// 		<div class="time">
-     //                    <span>일출</span><strong>6:00</strong> <span>일몰</span><strong>18:00</strong>
-     //            </div>
-		// 	`;
-     //         $('#info').empty().append(infoList);
-     //
-     //     });
-     // }
     </script>
+
+<!--   <table class="table">-->
+<!--        <tr>-->
+<!--            <th>일출</th>-->
+<!--            <th>일몰</th>-->
+
+<!--        </tr>-->
+
+<!--        <tbody id="info">-->
+<!--            <tr>-->
+
+<!--            </tr>-->
+<!--        </tbody>-->
+
+<!--    </table>-->
 
 
 
