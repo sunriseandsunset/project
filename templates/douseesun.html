@@ -23,44 +23,44 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
     <script>
-        Kakao.init('f84703106dbbf3c63cdc7e9b26d3533d'); //발급받은 키 중 javascript키를 사용해준다.
-        console.log(Kakao.isInitialized()); // sdk초기화여부판단
-//카카오로그인
-
-        function kakaoLogin() {
-            Kakao.Auth.login({
-                success: function (response) {
-                    Kakao.API.request({
-                        url: '/v2/user/me',
-                        success: function (response) {
-                            console.log(response)
-                        },
-                        fail: function (error) {
-                            console.log(error)
-                        },
-                    })
-                },
-                fail: function (error) {
-                    console.log(error)
-                },
-            })
-        }
-
-        //카카오로그아웃
-        function kakaoLogout() {
-            if (Kakao.Auth.getAccessToken()) {
-                Kakao.API.request({
-                    url: '/v1/user/unlink',
-                    success: function (response) {
-                        console.log(response)
-                    },
-                    fail: function (error) {
-                        console.log(error)
-                    },
-                })
-                Kakao.Auth.setAccessToken(undefined)
-            }
-        }
+        // Kakao.init('f84703106dbbf3c63cdc7e9b26d3533d'); //발급받은 키 중 javascript키를 사용해준다.
+        // console.log(Kakao.isInitialized()); // sdk초기화여부판단
+// //카카오로그인
+//
+//         function kakaoLogin() {
+//             Kakao.Auth.login({
+//                 success: function (response) {
+//                     Kakao.API.request({
+//                         url: '/v2/user/me',
+//                         success: function (response) {
+//                             console.log(response)
+//                         },
+//                         fail: function (error) {
+//                             console.log(error)
+//                         },
+//                     })
+//                 },
+//                 fail: function (error) {
+//                     console.log(error)
+//                 },
+//             })
+//         }
+//
+//         //카카오로그아웃
+//         function kakaoLogout() {
+//             if (Kakao.Auth.getAccessToken()) {
+//                 Kakao.API.request({
+//                     url: '/v1/user/unlink',
+//                     success: function (response) {
+//                         console.log(response)
+//                     },
+//                     fail: function (error) {
+//                         console.log(error)
+//                     },
+//                 })
+//                 Kakao.Auth.setAccessToken(undefined)
+//             }
+//         }
 </script>
     <title>해보러갈래?</title>
 
@@ -69,6 +69,7 @@
     <style>
         * {
             /*font-family: 'Jua', sans-serif;*/
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             font-weight: bold;
             color: black;
@@ -79,7 +80,7 @@
         }
         li {
           list-style: none;
-            margin: 5px auto;
+            margin: 0px auto;
         }
         a {
             color: black;
@@ -89,7 +90,7 @@
             text-decoration: none;
         }
         .wrap {
-            width: 1000px;
+            width: 750px;
             margin: auto;
         }
         /*헤더*/
@@ -97,59 +98,69 @@
             text-align: center;
         }
         .alert-link {
-            font-size: 40px;
+            font-size: 50px;
+            font-family: 'Jua', sans-serif;
         }
         /*컨텐츠*/
-        .content:after {
-            display: block;
-            content: "";
-            clear: both;
-        }
-        .content {
-            margin-top: 50px;
-        }
+        /*.content:after {*/
+        /*    display: block;*/
+        /*    content: "";*/
+        /*    clear: both;*/
+        /*}*/
+
         /*카테고리*/
-        .menu {
-            width: 33.3333%;
-            float: left;
-        }
         .carte {
             width: 100%;
             text-align: center;
+            margin-top: -5px;
+        }
+        .carte li {
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .carte a {
+            padding: 5px 20px;
+            border-radius: 10px;
+        }
+        .carte a:hover {
+            background-color: #fdf3d0;
+            transition: 0.6s;
+        }
+        .content {
+            margin-top: 10px;
         }
         /*중앙이미지*/
         .image {
-            width: 33.3333%;
-            float: left;
+            width: 100%;
+            text-align: center;
         }
         #img {
-            width: 330px;
+            width: 600px;
             box-sizing: border-box;
             height: auto;
         }
         /*로그인*/
-        .login {
-            width: 33.3333%;
-            float: left;
-        }
-        .login-in {
-            width: 250px;
-            margin: auto;
-        }
-        .login-btn {
-            width: 250px;
-            margin: auto;
-        }
-        .btn btn-outline-warning {
-            display: none;
-        }
+        /*.login {*/
+        /*    width: 20%;*/
+        /*    float: right;*/
+        /*}*/
+        /*.login-in {*/
+        /*    width: 150px;*/
+        /*    margin: auto;*/
+        /*    font-size: 14px;*/
+        /*}*/
+        /*.login-btn {*/
+        /*    width: 250px;*/
+        /*    margin: auto;*/
+        /*}*/
+
         /*검색*/
         .select {
             width: 300px;
             margin: auto;
         }
         #search {
-            margin-top: 50px;
+            margin-top: 20px;
         }
         option {
             text-align: center;
@@ -158,23 +169,23 @@
         .place {
             /*border: 2px solid black;*/
             background-color: #fdf3d0;
-            width: 1000px;
-            height: 250px;
-            margin: 50px auto 0 auto;
+            width: 700px;
+            height: 200px;
+            margin: 20px auto 0 auto;
         }
         .place p {
             text-align: center;
-            font-size: 25px;
+            font-size: 15px;
             padding-top: 10px;
         }
         .fictures {
             display: flex;
         }
         .ficture {
-            border: 2px solid black;
+            border: 1px solid black;
             width: 150px;
             height: 100px;
-            margin: 20px 20px 0 20px;
+            margin: 0 40px 0 40px;
         }
         .ficture img {
             width: 100%;
@@ -185,9 +196,13 @@
             transform: scale(1.1);
             transition: 1.2s;
         }
-        .next {
-            margin-top: 55px;
+        .ment {
+            font-size: 14px;
+            margin-top: 10px;
         }
+        /*.next {*/
+        /*    margin-top: 55px;*/
+        /*}*/
     </style>
 
 
@@ -201,44 +216,42 @@
                 <a href="#" class="alert-link">해보러갈래?</a>
             </div>
         </div>
+        <div class="carte">
+            <ul>
+                <li><a href="#">커뮤니티</a></li>
+                <li><a href="#">리뷰 모아보기</a></li>
+                <li><a href="#">찜 목록 보기</a></li>
+                <li><a href="#">채팅</a></li>
+            </ul>
+        </div>
+
         <div class="content">
-            <div class="menu">
-                <div class="carte">
-                    <h4>카테고리</h4>
-                    <ul>
-                        <li><a href="#">커뮤니티</a></li>
-                        <li><a href="#">리뷰 모아보기</a></li>
-                        <li><a href="#">찜 목록 보기</a></li>
-                        <li><a href="#">채팅</a></li>
-                    </ul>
-                </div>
-            </div>
             <div class="image">
                 <img src="https://cdn.pixabay.com/photo/2017/07/31/21/04/people-2561053__340.jpg" alt="sun" id="img">
             </div>
-            <div class="login">
-                <div class="login-in">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">ID</span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2">PW</span>
-                        </div>
-                        <input type="password" class="form-control" placeholder="Password" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="login-btn">
-                    <button type="button" class="btn btn-outline-warning" onclick="kakaoLogin()" ><a href="javascript:void(0)">카카오 로그인</button>
-                </div>
-                <div class="login-btn">
-                    <button type="button" class="btn btn-outline-warning" onclick="kakaoLogout()" ><a href="javascript:void(0)">카카오 로그아웃</button>
-                </div>
+<!--            <div class="login">-->
+<!--                <div class="login-in">-->
+<!--                    <div class="input-group mb-3">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                            <span class="input-group-text" id="basic-addon1">ID</span>-->
+<!--                        </div>-->
+<!--                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"-->
+<!--                               aria-describedby="basic-addon1">-->
+<!--                    </div>-->
+<!--                    <div class="input-group mb-3">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                            <span class="input-group-text" id="basic-addon2">PW</span>-->
+<!--                        </div>-->
+<!--                        <input type="password" class="form-control" placeholder="Password" aria-label="Username"-->
+<!--                               aria-describedby="basic-addon1">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="login-btn">-->
+<!--                    <button type="button" class="btn btn-outline-warning" onclick="kakaoLogin()" ><a href="javascript:void(0)">카카오 로그인</button>-->
+<!--                </div>-->
+<!--                <div class="login-btn">-->
+<!--                    <button type="button" class="btn btn-outline-warning" onclick="kakaoLogout()" ><a href="javascript:void(0)">카카오 로그아웃</button>-->
+<!--                </div>-->
 
             </div>
         </div>
@@ -265,7 +278,7 @@
             <p>이번주 인기명소(게시물) Top 5</p>
             <div class="fictures">
                 <div class="ficture fir">
-                    <a href="#"><img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
+                    <a href="#"><img src="https://cdn.pixabay.com/photo/2018/06/02/17/50/forest-3448818__340.jpg" alt="ficture">
                     <div class="ment">
                         아이디 : kimbuja <br> 위치 : 이 세상 어딘가</a>
                     </div>
@@ -282,19 +295,8 @@
                         아이디 : kimbuja <br> 위치 : 이 세상 어딘가</a>
                     </div>
                 </div>
-                <div class="ficture fou">
-                    <a href="#"><img src="https://cdn.pixabay.com/photo/2020/02/16/20/03/sunrising-in-argentina-4854652__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가</a>
-                    </div>
-                </div>
-                <div class="ficture fif">
-                    <a href="#"><img src="https://cdn.pixabay.com/photo/2018/05/16/12/30/sunrise-3405674__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가</a>
-                    </div>
-                </div>
-                <span class="next"><a href="#">▶</a></span>
+
+<!--                <span class="next"><a href="#">▶</a></span>-->
             </div>
         </div>
 
