@@ -133,7 +133,11 @@
                 </div>
                 <div class="time-menu">
                     <div class="time">
+<<<<<<< HEAD
                         <span>일출: </span><strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong> <span>일몰: </span><strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+=======
+                        <span>일출</span><strong><span id="sunrise"></span></strong> <span>일몰</span><strong><span id="sunset"></span></strong>
+>>>>>>> c73cf8f7166915a95e94223efdfe06f26b6db66f
                     </div>
                     <div class="sub-menu">
                         <select class="form-control" >
@@ -207,7 +211,7 @@
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-        for (var i = 0; i < positions.length; i++) {
+        for (let i = 0; i < positions.length; i++) {
 
             var imageSize = new kakao.maps.Size(24, 35);    // 마커 이미지의 이미지 크기 입니다
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  // 마커 이미지를 생성합니다
@@ -223,13 +227,18 @@
             });
 
 
-            kakao.maps.event.addListener(marker, 'click', function () {
-                //마커클릭이벤트
+            kakao.maps.event.addListener(marker, 'mouseover', function (){show_time(marker)});//클릭하면 일출일몰시간보임
+            kakao.maps.event.addListener(marker, 'mouseout', function(){delete_time()});
+
+        }
+
+        function show_time(marker){
+
 
                 var long = marker.getPosition().getLng();
                 var lati = marker.getPosition().getLat();
 
-                console.log(long.lati)
+                console.log(long,lati)
 
                 function getCurrentDate() {
                     var date = new Date();
@@ -275,23 +284,35 @@
                 }
 
                 function xmlParsing(data) {
-                    var infoList = ``;
-
+                    var riseList = ``; //일출
+                    var setList=``; //일몰
                     $(data).find('items').each(function (index, item) {
 
+                        riseList += `${$(this).find('sunrise').text()}`;
+                        setList+=`${$(this).find('sunset').text()}`;
 
+<<<<<<< HEAD
                         infoList += `
                         <span>일출</span><strong>${$(this).find('sunrise').text()}/strong> <span>일몰</span><strong>${$(this).find('sunset').text()}</strong>
                 `;
                         console.log(infoList);
                          $('.time').empty().append(infoList);
+=======
+                         $('#sunrise').append(riseList);
+                         $('#sunset').append(setList);
+
+>>>>>>> c73cf8f7166915a95e94223efdfe06f26b6db66f
 
                     });
                 }
 
 
-            });
 
+        }
+        function delete_time(){
+
+            $('#sunrise').empty();
+            $('#sunset').empty();
 
         }
 

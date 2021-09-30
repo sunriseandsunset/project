@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, render_template, jsonify, request,redirect,url_for
 from pymongo import MongoClient
 import requests
@@ -11,7 +12,10 @@ db = client.dbproject
 
 @app.route('/')
 def index():
+    # kimp = flask.Response()
+    # kimp.headers["Access-Control-Allow-Origin"] = "*"
     return render_template('douseesun.html')
+
 
 '''
 
