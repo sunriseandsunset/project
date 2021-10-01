@@ -1,26 +1,35 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, request
+from pymongo import MongoClient
+
 app = Flask(__name__)
 
+client = MongoClient("mongodb://localhost:27017/")
+db = client.dbStock
+
+
 @app.route('/')
-def home():
-   return render_template('index.html')
-
-@app.route('/codes', methods=['GET'])
-def test_get():
-   title_receive = request.args.get('group')
-   print(title_receive)
-   return jsonify({'group':'success', 'msg': '이 요청은 GET!'})
-
-   doc = { 'market': ''
-
-   }
-
-@app.route('/test', methods=['POST'])
-def test_post():
-   title_receive = request.form['title_give']
-   print(title_receive)
-   return jsonify({'result':'success', 'msg': '이 요청은 POST!'})
+def index():
+    return render_template('index.html')
 
 
-if __name__ == '__main__':
-   app.run('0.0.0.0',port=5000,debug=True)
+
+@app.route('/post', methods=['POST'])
+def save_post():
+    doc = {'idx': 'index', 'title': 'title', 'content': 'content', 'reg_date': 'date'}
+    db.post.insert_one(doc)
+    return {"result": "success"}
+
+
+@app.route('/post', methods=['GET'])
+def get_post():
+    data = list(db.post.find({}, {'_id': False})
+    return {"result": "success"}
+
+
+@app.route('/post', methods=['DELETE'])
+def delete_post():
+    return {"result": "success"}
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
