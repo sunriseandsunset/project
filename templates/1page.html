@@ -206,7 +206,10 @@
                 <h1>Dear, my sun</h1>
                 <h6><span class="strong">일출&일몰 명소,</span> <br> 사랑하는 사람과 함께하세요</h6>
                 <button class="login"> Log in </button>
-                <div class="select-box">
+
+                <form action = "http://localhost:5000/place" method = "POST" name="selectarea">
+
+                     <div class="select-box">
                         <div class="input-group" id="search">
                             <select class="custom-select" name="inputGroupSelect04">
                                 <option selected value="0">------ 지역 선택 ------</option>
@@ -221,17 +224,13 @@
                             </div>
                         </div>
                     </div>
-            </div>
-
-
-
-                </div>
-
+                </form>
             </div>
         </div>
 
 
-        <form action = "http://localhost:5000/place" method = "POST" name="selectarea"></form>
+
+
         <div class="title_box">
             <h7>이번주 인기명소 Top 5</h7>
         </div>
