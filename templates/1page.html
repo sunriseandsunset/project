@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!--    <link rel="stylesheet" type="text/css" href="login.css">-->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+    <script>
+
+
+    </script>
+    <title>Dear,my sun</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+          list-style: none;
+            margin: 0px auto;
+        }
+        a {
+            color: black;
+            /*color: #fdf3d0;*/
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        /*.wrap {*/
+        /*    width: 1000px;*/
+
+        /*}*/
+        /*헤더*/
+        /*.title {*/
+        /*    text-align: center;*/
+        /*}*/
+        /*.alert-link {*/
+        /*    font-size: 50px;*/
+        /*    font-family: 'Jua', sans-serif;*/
+        /*}*/
+        /*컨텐츠*/
+        /*.content:after {*/
+        /*    display: block;*/
+        /*    content: "";*/
+        /*    clear: both;*/
+        /*}*/
+
+        /*카테고리*/
+        .carte {
+            width: 100%;
+            text-align: center;
+            margin-top: -5px;
+        }
+        .carte li {
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .carte a {
+            padding: 5px 20px;
+            border-radius: 10px;
+        }
+        .carte a:hover {
+            background-color: #fdf3d0;
+            transition: 0.6s;
+        }
+
+        .content {
+            /*background-color: cadetblue;*/
+            padding: 150px 0px 0px 25%;
+            /*font-style: italic;*/
+        }
+
+        .content > h1 {
+            font-family: 'Birthstone', cursive;
+            font-weight: bolder;
+            font-size: 70px;
+            color: black;
+            line-height:50px;
+        }
+
+        .image {
+            width: 100%;
+            height: 500px;
+
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
+            background-size: cover;
+            background-position: center;
+
+        }
+
+        .strong {
+            font-weight: bold;
+            font-size: 20px;
+            line-height:30px;
+        }
+
+        .title_box {
+            width: 100%;
+            height: 25px;
+            background-color: black;
+            color: white;
+
+            text-align: center;
+            font-style: italic;
+        }
+
+
+        /*로그인*/
+        .login {
+            width: 100px;
+            background-color: darkred;
+            color: white;
+            border: 0;
+            outline: 0;
+            margin: 10px 0px 0px 0px;
+        }
+
+        .login:hover {
+            opacity: 80%;
+        }
+
+        /*검색*/
+        .select-box {
+            width: 250px;
+            margin: 0;
+        }
+        #search {
+            margin-top: 20px;
+        }
+        option {
+            text-align: center;
+        }
+        /*명소*/
+        .place {
+            width: 1000px;
+            height: 200px;
+            margin: 20px auto 0 auto;
+        }
+        .place p {
+            text-align: center;
+            font-size: 15px;
+            padding-top: 10px;
+        }
+        .fictures {
+            display: flex;
+        }
+        .ficture {
+            border: 1px solid black;
+            width: 150px;
+            height: 100px;
+            margin: 0 20px 0 20px;
+        }
+        .ficture img {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .ficture:hover {
+            transform: scale(1.1);
+            transition: 1.2s;
+        }
+        .ment {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+
+    </style>
+
+
+
+</head>
+
+<body>
+
+        <div class="image">
+
+            <div class="content">
+                <h1>Dear, my sun</h1>
+                <h6><span class="strong">일출&일몰 명소,</span> <br> 사랑하는 사람과 함께하세요</h6>
+                <button class="login"> Log in </button>
+                <div class="select-box">
+                        <div class="input-group" id="search">
+                            <select class="custom-select" name="inputGroupSelect04">
+                                <option selected value="0">------ 지역 선택 ------</option>
+                                <option value="서울">서울</option>
+                                <option value="인천">인천</option>
+                                <option value="수원">수원</option>
+                                <option value="강릉">강릉</option>
+                                <option value="강원도">강원도</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" name="submit" value="success">검색</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <form action = "http://localhost:5000/place" method = "POST" name="selectarea"></form>
+        <div class="title_box">
+            <h7>이번주 인기명소 Top 5</h7>
+        </div>
+        <div class="place">
+            <div class="fictures">
+                <div class="ficture 1st">
+                    <img src="https://cdn.pixabay.com/photo/2018/06/02/17/50/forest-3448818__340.jpg" alt="ficture">
+                    <div class="ment">
+                       아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture 2nd">
+                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture 3nd">
+                    <img src="https://cdn.pixabay.com/photo/2019/12/17/10/15/sun-4701316__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture 4nd">
+                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+                <div class="ficture 5nd">
+                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
+                    <div class="ment">
+                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</body>
+
+</html>
