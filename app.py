@@ -4,6 +4,8 @@ from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
 import json
+import xmltodict
+import sys
 
 app = Flask(__name__)
 
@@ -14,21 +16,13 @@ db = client.dbproject
 def index():
     # kimp = flask.Response()
     # kimp.headers["Access-Control-Allow-Origin"] = "*"
-    return render_template('douseesun.html')
+    return render_template('1page.html')
 
-
-'''
-
-@app.route('/place',methods=['POST'])
-def get_place():
-    area_receive=request.form['place_give']
-    
-    return jsonify({'result':'sucess','msg':'지역 선택!'})
-'''
 
 #지역별 명소 데이터 api 가져오기
 @app.route('/place',methods=['GET','POST'])
 def show_place():
+
     #선택한지역 넘겨주기
     if request.method == 'POST':
         want = request.form.get('inputGroupSelect04')
@@ -37,29 +31,39 @@ def show_place():
 
         places=list(places)
 
-        return render_template('douseesun2.html',data=want,places=places)
+        return render_template('2page.html',data=want,places=places)
 
-@app.route('/http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=', methods=['GET'])
-def get_time():
-    title_receive = request.args.get('xmlParsing')
-    print(title_receive)
-    return jsonify({'result': 'success', 'msg': '이 요청은 GET!'})
+#공공데이터 api query url 만드는함수
+def get_request_query(url, operation, params, serviceKey):
+    import urllib.parse as urlparse
+    params = urlparse.urlencode(params)
+    request_query = url + '/' + operation + '?' + params + '&' + 'serviceKey' + '=' + serviceKey
+    return request_query
 
-    '''
-    else:
-        want = request.args.get('give_place')
-        #area = request.args.get('in putGroupSelect04')
-        print(want)
-        places = db.sample.find({"address": want}, {'_id': False})
-        places = list(places)
-        print(places)
-
-   
-
-        return render_template('douseesun2.html', place_data=jsonify(places))
-    '''
+@app.route('/time',methods=['GET'])
+def show_time():
+    URL="http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService"
+    OPERATION = 'getLCRiseSetInfo'
+    SERVICEKEY="/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg=="
 
 
+    longitude = request.args.get('long',int)
+    latitude = request.args.get('lati',int)
+    date = request.args.get('date',int)
+    PARAMS={
+        'locdate':date,
+        'longitude':longitude,
+        'latitude':latitude,
+        'dnYn':'y'
+    }
+
+
+    #response=requests.get("http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=" + longitude + "&latitude=" + latitude + "&locdate=" + date + "&dnYn=y&ServiceKey=/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg==")
+    request_query = get_request_query(URL, OPERATION, PARAMS, SERVICEKEY)
+
+    print('request_query:', request_query)
+    response = requests.get(url=request_query)
+    return response.text
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000,debug=True)
