@@ -36,14 +36,14 @@
         }
 
         .wrap {
-            margin-top: 30px;
+            background-color: #0f7833;
         }
 
         .header {
             width: 1100px;
             height: 70px;
             background-color: black;
-            margin: auto;
+            margin: 30px auto 0 auto;
         }
 
         .header p {
@@ -61,9 +61,9 @@
 
         /*지도api위치*/
         .map {
-            width: 800px;
-            height: 400px;
-            margin: 3px 0px 0px 0px;
+            width: 950px;
+            height: 394px;
+            margin: 3px 0px 3px 0px;
             border: 1px solid black;
 
         }
@@ -73,8 +73,8 @@
             font-size: 20px;
             /*text-align: center;*/
             margin: 3px 0 0 3px;
-            width: 298px;
-            padding: 100px;
+            width: 248px;
+            padding: 70px;
             border: 1px solid black;
             /*background-color: #0f7833;*/
         }
@@ -95,27 +95,31 @@
             margin-left: 10px;
         }
 
-        .bottom-line {
-            width: 1100px;
-            margin: 3px auto 0px auto;
-            background-color: black;
-            height: 5px;
-        }
+        /*.bottom-line {*/
+        /*    width: 100%;*/
+        /*    margin: 3px auto 0px auto;*/
+        /*    background-color: black;*/
+        /*    height: 5px;*/
+        /*}*/
 
         /*정렬순서*/
         .sub-menu {
-            width: 100px;
-            height: 50px;
-            margin: 10px 0px 0px 1217px;
+            width: 100%;
+            height: 25px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-style: italic;
+            /*margin-top: 3px*/
         }
 
         /*명소 목록*/
         .review {
-            width: 1000px;
+            width: 950px;
             height: 200px;
-            margin: 0px auto 10px auto;
+            margin: 20px auto 0px auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
         }
 
 
@@ -124,7 +128,7 @@
 
             width: 150px;
             height: 100px;
-            margin: 0 20px 0 20px;
+            /*margin: 0 20px 0 20px;*/
         }
 
         /*.review-in-image {*/
@@ -141,7 +145,7 @@
         .review-in p {
             font-size: 12px;
             margin-top: 7px;
-            margin-left: 5px;
+
         }
     </style>
 
@@ -162,14 +166,11 @@
         </div>
     </div>
 
-    <div class="bottom-line"></div>
+<!--    <div class="bottom-line"></div>-->
+</div>
+
     <div class="sub-menu">
-        <select class="form-control">
-            <option>인기순</option>
-            <option>추천순</option>
-            <option>최신순</option>
-            <option>별점순</option>
-        </select>
+        <h7> 인기순 명소정렬</h7>
     </div>
 
 
@@ -206,7 +207,7 @@
         </div>
 
     </div>
-</div>
+
 
 
 </div>
