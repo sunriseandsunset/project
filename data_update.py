@@ -94,6 +94,6 @@ Jeju = [
 
 
 
-db.sample.insert_many(Gangwondo)
+db.sample.insert_many(Gangwon,Seoul,Incheon,Ulleung,Gyeonggi,Chungnam,Chungbuk,Gyeongnam,Gyeongbuk,Jeonbuk,Jeonnam,Ulsan,Busan,Jeju)
 
 
