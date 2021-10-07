@@ -12,12 +12,16 @@ soup = BeautifulSoup(data.text, 'html.parser')
 
 #places=soup.select('#_sunrise_infoLayer > ul:nth-child(1) > li:nth-child(1)')
 places=soup.select('#_sunrise_infoLayer>ul>li')
-
+#_sunrise_infoLayer > ul:nth-child(1) > li:nth-child(1) > a > span.bd
+#_sunrise_infoLayer > ul:nth-child(1) > li:nth-child(1) > a > img
 for place in places:
 
         one_title=place.select_one('dl > dt > a')
         one_location=place.select_one('dl > dd:nth-child(2)')
+        one_image=place.select_one(' a > img')
         if one_title is not None:
             print('명소:',  one_title.text)
         if one_location is not None:
             print('장소:', one_location.text)
+        if one_image is not None:
+            print('이미지 :', one_image['src'])

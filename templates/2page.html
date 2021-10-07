@@ -27,23 +27,19 @@
 
         }
 
-        li {
-            list-style: none;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
         .wrap {
-            background-color: #0f7833;
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
+            background-size: cover;
+            background-position: top;
+
+            padding-top: 30px;
         }
 
         .header {
             width: 1100px;
             height: 70px;
             background-color: black;
-            margin: 30px auto 0 auto;
+            margin: 0px auto 0 auto;
         }
 
         .header p {
@@ -72,11 +68,17 @@
         .time {
             font-size: 20px;
             /*text-align: center;*/
-            margin: 3px 0 0 3px;
+            margin: 3px 0 3px 3px;
             width: 248px;
-            padding: 70px;
+            padding: 50px;
             border: 1px solid black;
-            /*background-color: #0f7833;*/
+            background-color: white;
+        }
+
+        .info {
+            font-size: 13px;
+            text-align: center;
+            line-height: 10px;
         }
 
         .time span {
@@ -95,12 +97,6 @@
             margin-left: 10px;
         }
 
-        /*.bottom-line {*/
-        /*    width: 100%;*/
-        /*    margin: 3px auto 0px auto;*/
-        /*    background-color: black;*/
-        /*    height: 5px;*/
-        /*}*/
 
         /*정렬순서*/
         .sub-menu {
@@ -115,38 +111,42 @@
 
         /*명소 목록*/
         .review {
-            width: 950px;
+            width: 1100px;
             height: 200px;
-            margin: 20px auto 0px auto;
+            margin: 20px auto 0 auto;
             display: flex;
-            justify-content: space-between;
+
         }
 
 
         .review-in {
-            border: 1px solid black;
+            display: flex;
+            justify-content: space-between;
 
-            width: 150px;
-            height: 100px;
-            /*margin: 0 20px 0 20px;*/
         }
 
-        /*.review-in-image {*/
-        /*    width: 230px;*/
-        /*    height: 150px;*/
-        /*}*/
+        .review-in-image {
+            border: 1px solid black;
+            width: 200px;
+            height: 130px;
+        }
 
         .review-in img {
             width: 100%;
             height: 100%;
-            /*box-sizing: border-box;*/
+            box-sizing: border-box;
         }
 
         .review-in p {
-            font-size: 12px;
-            margin-top: 7px;
-
+            font-size: 15px;
+            margin-top: 5px;
         }
+
+        .review-in-image:hover {
+            transform: scale(1.1);
+            transition: 1.2s;
+        }
+
     </style>
 
     <title>Dear,my sun</title>
@@ -163,49 +163,25 @@
             <p style="font-weight: bold; font-size: 30px"> 정동진 </p>
             <span>일출:</span> <span id="sunrise"></span>&emsp;&emsp;&emsp;&emsp;&emsp;
             <p><span>일몰:</span> <span id="sunset"></span></p>
+            <p><span class="info">* 원하는 장소에 마우스를 올리면 일출&일몰 시간이 출력됩니다:)</span></p>
         </div>
     </div>
 
-<!--    <div class="bottom-line"></div>-->
 </div>
 
     <div class="sub-menu">
         <h7> 인기순 명소정렬</h7>
     </div>
 
-
     <div class="review">
+        {% for place in places %}
         <div class="review-in" id="review-1st">
             <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2014/12/16/22/25/woman-570883__340.jpg" alt="review">
-                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
+                <img src="{{ place['image']}}" alt="review">
+                <p>장소명 :  {{ place['name'] }}<br> 주소 : {{ place['address'] }}</p>
             </div>
         </div>
-        <div class="review-in" id="review-2nd">
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
-                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
-            </div>
-        </div>
-        <div class="review-in" id="review-3nd">
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
-                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
-            </div>
-        </div>
-        <div class="review-in" id="review-4nd">
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
-                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
-            </div>
-        </div>
-        <div class="review-in" id="review-5nd">
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
-                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
-            </div>
-        </div>
-
+         {% endfor %}
     </div>
 
 
@@ -219,7 +195,7 @@
 <script>
     var array = {{places | tojson}};
 
-    var markerPosition = new kakao.maps.LatLng(array[0]['latitude'], array[0]['longtitude'])
+    var markerPosition = new kakao.maps.LatLng(array[0]['latitude'], array[0]['longitude'])
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: markerPosition, // 지도의 중심좌표
@@ -232,7 +208,7 @@
 
     for (let i = 0; i < array.length; i++) {
         let now_name = array[i]['name'];
-        let now_long = array[i]['longtitude'];
+        let now_long = array[i]['longitude'];
         let now_lati = array[i]['latitude'];
         var now_dict = {
             title: now_name,
