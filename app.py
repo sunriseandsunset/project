@@ -27,11 +27,23 @@ def show_place():
     if request.method == 'POST':
         want = request.form.get('inputGroupSelect04')
         #print(want)
-        places = db.sample.find({"address": want}, {'_id': False})
+        places = db.sample.find({"area": want}, {'_id': False})
 
         places=list(places)
+        print(places)
 
         return render_template('2page.html',data=want,places=places)
+
+def show_detail():
+    if request.method == 'POST':
+        want = request.form.get('inputGroupSelect04')
+        # print(want)
+        places = db.sample.find({"area": want}, {'_id': False})
+
+        places = list(places)
+        print(places)
+
+        return render_template('2page.html', data=want, places=places)
 
 #공공데이터 api query url 만드는함수
 def get_request_query(url, operation, params, serviceKey):

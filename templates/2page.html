@@ -114,6 +114,8 @@
             width: 1100px;
             height: 200px;
             margin: 20px auto 0 auto;
+            display: flex;
+            
         }
 
 
@@ -172,33 +174,14 @@
     </div>
 
     <div class="review">
-    <div class="review-in">
-
+        {% for place in places %}
+        <div class="review-in" id="review-1st">
             <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2014/12/16/22/25/woman-570883__340.jpg" alt="review-in-image">
-                <p><span style="font-weight: bold ">명소이름</span> <br> 이 세상 어딘가</p>
+                <img src="{{ place['image']}}" alt="review">
+                <p>장소명 :  {{ place['name'] }}<br> 주소 : {{ place['address'] }}</p>
             </div>
-
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review-in-image">
-                <p><span style="font-weight: bold ">명소이름</span> <br> 이 세상 어딘가</p>
-            </div>
-
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review-in-image">
-                <p><span style="font-weight: bold ">명소이름</span> <br> 이 세상 어딘가</p>
-            </div>
-
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review-in-image">
-                <p><span style="font-weight: bold ">명소이름</span> <br> 이 세상 어딘가</p>
-            </div>
-
-            <div class="review-in-image">
-                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review-in-image">
-                <p><span style="font-weight: bold ">명소이름</span> <br> 이 세상 어딘가</p>
-            </div>
-    </div>
+        </div>
+         {% endfor %}
     </div>
 
 
