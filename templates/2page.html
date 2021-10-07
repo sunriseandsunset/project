@@ -22,14 +22,9 @@
             crossorigin="anonymous"></script>
 
 
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
         * {
-            /*font-family: 'Jua', sans-serif;*/
-            font-family: 'Roboto', sans-serif;
-            font-weight: bold;
-            margin: 0;
-            padding: 0;
+
         }
 
         li {
@@ -40,55 +35,52 @@
             text-decoration: none;
         }
 
+        .wrap {
+            margin-top: 30px;
+        }
+
         .header {
-            width: 750px;
-            background-color: #fdf3d0;
+            width: 1100px;
+            height: 70px;
+            background-color: black;
             margin: auto;
         }
 
         .header p {
-            font-size: 40px;
+            font-size: 28px;
             text-align: center;
-            font-family: 'Jua', sans-serif;
-            color: #544315;
+            line-height: 70px;
+            color: white;
+        }
+
+        .content {
+            width: 1100px;
+            margin: auto;
+            display: flex;
         }
 
         /*지도api위치*/
-        .content {
-            width: 500px;
-            margin: auto;
-        }
-
         .map {
-            border: 2px solid black;
-            width: 500px;
+            width: 800px;
             height: 400px;
-            margin: 30px auto 20px auto;
-        }
+            margin: 3px 0px 0px 0px;
+            border: 1px solid black;
 
-        .map img {
-            margin: 30px 65px;
         }
 
         /*일몰,일출 시간*/
-        .time-menu {
-            display: flex;
-            width: 100%;
-            position: relative;
-            /*background-color: aquamarine;*/
-            align-items: center;
-            height: 30px;
-        }
-
         .time {
-            position: absolute;
-            font-size: 25px;
-            display: block;
+            font-size: 20px;
+            /*text-align: center;*/
+            margin: 3px 0 0 3px;
+            width: 298px;
+            padding: 100px;
+            border: 1px solid black;
+            /*background-color: #0f7833;*/
         }
 
         .time span {
-            background-color: #fdf3d0;
-            font-weight: normal;
+            font-weight: lighter;
         }
 
         #sunrise {
@@ -103,89 +95,110 @@
             margin-left: 10px;
         }
 
+        .bottom-line {
+            width: 1100px;
+            margin: 3px auto 0px auto;
+            background-color: black;
+            height: 5px;
+        }
+
         /*정렬순서*/
         .sub-menu {
-            position: absolute;
             width: 100px;
-            right: 0px;
-            top: 0px;
+            height: 50px;
+            margin: 10px 0px 0px 1217px;
         }
 
         /*명소 목록*/
         .review {
-            width: 500px;
+            width: 1000px;
             height: 200px;
-            margin: 30px auto 10px auto;
+            margin: 0px auto 10px auto;
             display: flex;
+            justify-content: center;
         }
+
 
         .review-in {
             border: 1px solid black;
-            width: 240px;
-            height: 210px;
+
+            width: 150px;
+            height: 100px;
+            margin: 0 20px 0 20px;
         }
 
-        #review-fir {
-            margin-right: 20px;
-        }
-
-        #review-sec {
-            margin-left: 20px;
-        }
-
-        .review-in-image {
-            width: 230px;
-            height: 150px;
-        }
+        /*.review-in-image {*/
+        /*    width: 230px;*/
+        /*    height: 150px;*/
+        /*}*/
 
         .review-in img {
             width: 100%;
             height: 100%;
-            box-sizing: border-box;
+            /*box-sizing: border-box;*/
         }
 
         .review-in p {
-            font-size: 15px;
+            font-size: 12px;
             margin-top: 7px;
             margin-left: 5px;
         }
     </style>
 
-    <title>해보러갈래?</title>
+    <title>Dear,my sun</title>
     <!--<script src="/static/show_place.js"></script>-->
 </head>
 <body>
 <div class="wrap">
     <div class="header">
-        <p>{{ data }}</p>
+        <p><span style="font-weight: bold; font-size: 35px" >[   {{ data }}   ]</span> 일출일몰 명소</p>
     </div>
     <div class="content">
-        <div class="map" id="map">
-
-        </div>
-        <div class="time-menu">
-            <div class="time">
-                <span>일출:</span> <span id="sunrise"></span>&emsp;&emsp;&emsp;&emsp;&emsp;<span>일몰:</span><span
-                    id="sunset"></span>
-            </div>
-            <div class="sub-menu">
-                <select class="form-control">
-                    <option>인기순</option>
-                    <option>추천순</option>
-                    <option>최신순</option>
-                    <option>별점순</option>
-                </select>
-            </div>
+        <div class="map" id="map"> </div>
+        <div class="time">
+            <p style="font-weight: bold; font-size: 30px"> 정동진 </p>
+            <span>일출:</span> <span id="sunrise"></span>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <p><span>일몰:</span> <span id="sunset"></span></p>
         </div>
     </div>
+
+    <div class="bottom-line"></div>
+    <div class="sub-menu">
+        <select class="form-control">
+            <option>인기순</option>
+            <option>추천순</option>
+            <option>최신순</option>
+            <option>별점순</option>
+        </select>
+    </div>
+
+
     <div class="review">
-        <div class="review-in" id="review-fir">
+        <div class="review-in" id="review-1st">
             <div class="review-in-image">
                 <img src="https://cdn.pixabay.com/photo/2014/12/16/22/25/woman-570883__340.jpg" alt="review">
                 <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
             </div>
         </div>
-        <div class="review-in" id="review-sec">
+        <div class="review-in" id="review-2nd">
+            <div class="review-in-image">
+                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
+                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
+            </div>
+        </div>
+        <div class="review-in" id="review-3nd">
+            <div class="review-in-image">
+                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
+                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
+            </div>
+        </div>
+        <div class="review-in" id="review-4nd">
+            <div class="review-in-image">
+                <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
+                <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
+            </div>
+        </div>
+        <div class="review-in" id="review-5nd">
             <div class="review-in-image">
                 <img src="https://cdn.pixabay.com/photo/2016/09/01/19/43/sunset-1637376_960_720.jpg" alt="review">
                 <p>장소명 : 명소 <br> 주소 : 이 세상 어딘가</p>
