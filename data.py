@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 #샘플데이터 - 강원도 3개 만들기
 from pymongo import MongoClient
 
@@ -14,3 +16,4 @@ Gangwondo = [
 db.sample.insert_many(Gangwondo)
 
 
+>>>>>>> 957ff2f36a7adc6d3315e1913ac2eec2e7e64015
