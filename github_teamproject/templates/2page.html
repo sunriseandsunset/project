@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+
+    <style>
+        * {
+
+        }
+
+        .wrap {
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
+            background-size: cover;
+            background-position: top;
+
+            padding-top: 30px;
+        }
+
+        .header {
+            width: 1100px;
+            height: 70px;
+            background-color: black;
+            margin: 0px auto 0 auto;
+        }
+
+        .header p {
+            font-size: 28px;
+            text-align: center;
+            line-height: 70px;
+            color: white;
+        }
+
+        .content {
+            width: 1100px;
+            margin: auto;
+            display: flex;
+        }
+
+        /*지도api위치*/
+        .map {
+            width: 950px;
+            height: 394px;
+            margin: 3px 0px 3px 0px;
+            border: 1px solid black;
+
+        }
+
+        /*일몰,일출 시간*/
+        .time {
+            font-size: 20px;
+            /*text-align: center;*/
+            margin: 3px 0 3px 3px;
+            width: 248px;
+            padding: 50px;
+            border: 1px solid black;
+            background-color: white;
+        }
+
+        .info {
+            font-size: 13px;
+            text-align: center;
+            line-height: 10px;
+        }
+
+        .time span {
+            font-weight: lighter;
+        }
+
+        #sunrise {
+            background-color: white;
+        }
+
+        #sunset {
+            background-color: white;
+        }
+
+        .time strong {
+            margin-left: 10px;
+        }
+
+
+        /*정렬순서*/
+        .sub-menu {
+            width: 100%;
+            height: 25px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-style: italic;
+            /*margin-top: 3px*/
+        }
+
+        /*명소 목록*/
+        .review {
+            width: 1100px;
+            height: 200px;
+            margin: 20px auto 0 auto;
+            display: flex;
+
+        }
+
+
+        .review-in {
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        .review-in-image {
+            border: 1px solid black;
+            width: 200px;
+            height: 130px;
+        }
+
+        .review-in img {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .review-in p {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .review-in-image:hover {
+            transform: scale(1.1);
+            transition: 1.2s;
+        }
+
+    </style>
+
+    <title>Dear,my sun</title>
+    <!--<script src="/static/show_place.js"></script>-->
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <p><span style="font-weight: bold; font-size: 35px" >[   {{ data }}   ]</span> 일출일몰 명소</p>
+    </div>
+    <div class="content">
+        <div class="map" id="map"> </div>
+        <div class="time">
+            <p style="font-weight: bold; font-size: 30px"> 정동진 </p>
+            <span>일출:</span> <span id="sunrise"></span>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <p><span>일몰:</span> <span id="sunset"></span></p>
+            <p><span class="info">* 원하는 장소에 마우스를 올리면 일출&일몰 시간이 출력됩니다:)</span></p>
+        </div>
+    </div>
+
+</div>
+
+    <div class="sub-menu">
+        <h7> 인기순 명소정렬</h7>
+    </div>
+
+    <div class="review">
+        {% for place in places %}
+        <div class="review-in" id="review-1st">
+            <div class="review-in-image">
+                <img src="{{ place['image']}}" alt="review">
+                <p>장소명 :  {{ place['name'] }}<br> 주소 : {{ place['address'] }}</p>
+            </div>
+        </div>
+         {% endfor %}
+    </div>
+
+
+
+</div>
+
+
+<script src="https://d3js.org/d3.v5.js"></script>
+<script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=535068688f1a8bca1c21a9445ede0a89"></script>
+<script>
+    var array = {{places | tojson}};
+
+    var markerPosition = new kakao.maps.LatLng(array[0]['latitude'], array[0]['longitude'])
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: markerPosition, // 지도의 중심좌표
+            level: 11 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    var positions = new Array();
+
+
+    for (let i = 0; i < array.length; i++) {
+        let now_name = array[i]['name'];
+        let now_long = array[i]['longitude'];
+        let now_lati = array[i]['latitude'];
+        var now_dict = {
+            title: now_name,
+            latlng: new kakao.maps.LatLng(now_lati, now_long)
+        }
+
+        positions.push(now_dict)
+
+
+    }
+    // console.log(positions)
+
+
+    // 마커 이미지의 이미지 주소입니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    for (let i = 0; i < positions.length; i++) {
+
+        var imageSize = new kakao.maps.Size(24, 35);    // 마커 이미지의 이미지 크기 입니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  // 마커 이미지를 생성합니다
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            map: map,  // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            image: markerImage, // 마커 이미지
+            clickable: true,
+
+        });
+
+
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+            show_time(marker)
+        });//클릭하면 일출일몰시간보임
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+            delete_time()
+        });
+
+    }
+
+    //마커눌렀을때 일출일몰시간 api 뜨는 함수
+    function show_time(marker) {
+
+
+        var long = marker.getPosition().getLng();
+        var lati = marker.getPosition().getLat();
+
+        console.log(long, lati)
+
+        function getCurrentDate() {
+            var date = new Date();
+            var year = date.getFullYear().toString();
+
+            var month = date.getMonth() + 1;
+            month = month < 10 ? '0' + month.toString() : month.toString();
+
+            var day = date.getDate();
+            day = day < 10 ? '0' + day.toString() : day.toString();
+
+            return year + month + day;
+        }
+
+        var date = getCurrentDate();
+
+        //alert(date)
+        show(long, lati, date);
+
+
+        function show(longitude, latitude, date) {
+
+            console.log(longitude)
+            console.log(latitude)
+
+
+            $.ajax({
+                type: "GET",
+                url: "/time?&long="+longitude+"&lati="+latitude+"&date="+date,
+                dataType:'xml',
+                success: function (response) {
+
+                    xmlParsing(response);
+
+
+                },
+                error: function (xhr, status, msg) { // 통신 실패시 호출해야하는 함수
+                    console.log('상태값 : ' + status + ' Http에러메시지 : ' + msg);
+                },
+
+            });
+        }
+
+        function xmlParsing(data) {
+            var riseList = ``; //일출
+            var setList = ``; //일몰
+            $(data).find('items').each(function (index, item) {
+
+                riseList += `${$(this).find('sunrise').text()}`;
+                setList += `${$(this).find('sunset').text()}`;
+
+                $('#sunrise').append(riseList);
+                $('#sunset').append(setList);
+
+
+            });
+        }
+
+
+    }
+
+    function delete_time() {
+
+        $('#sunrise').empty();
+        $('#sunset').empty();
+
+    }
+
+
+</script>
+
+
+</body>
+</html>
