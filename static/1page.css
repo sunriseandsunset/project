@@ -1,0 +1,99 @@
+* {
+
+        }
+
+        .content {
+            /*background-color: cadetblue;*/
+            padding: 150px 0px 0px 25%;
+            /*font-style: italic;*/
+        }
+
+        .content > h1 {
+            font-family: 'Birthstone', cursive;
+            font-weight: bolder;
+            font-size: 70px;
+            color: black;
+            line-height:50px;
+        }
+
+        .image {
+            width: 100%;
+            height: 500px;
+
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
+            background-size: cover;
+            background-position: center;
+
+        }
+
+        .strong {
+            font-weight: bold;
+            font-size: 20px;
+            line-height:30px;
+        }
+
+        .title_box {
+            width: 100%;
+            height: 25px;
+            background-color: black;
+            color: white;
+
+            text-align: center;
+            font-style: italic;
+        }
+
+
+        /*로그인*/
+        .login {
+            width: 100px;
+            background-color: darkred;
+            color: white;
+            border: 0;
+            outline: 0;
+            margin: 10px 0px 0px 0px;
+        }
+
+        .login:hover {
+            opacity: 80%;
+        }
+
+        /*검색*/
+        .select-box {
+            width: 250px;
+            margin: 0;
+        }
+        #search {
+            margin-top: 20px;
+        }
+        option {
+            text-align: center;
+        }
+        /*명소*/
+        .place {
+            width: 1100px;
+            height: 200px;
+            margin: 20px auto 0 auto;
+        }
+
+        .fictures {
+            display: flex;
+            justify-content: space-between;
+        }
+        .ficture {
+            border: 1px solid black;
+            width: 200px;
+            height: 130px;
+        }
+        .ficture img {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .ficture:hover {
+            transform: scale(1.1);
+            transition: 1.2s;
+        }
+        .ment {
+            font-size: 15px;
+            margin-top: 5px;
+        }
