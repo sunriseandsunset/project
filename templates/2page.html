@@ -115,15 +115,10 @@
             height: 200px;
             margin: 20px auto 0 auto;
             display: flex;
-
-        }
-
-
-        .review-in {
-            display: flex;
             justify-content: space-between;
 
         }
+
 
         .review-in-image {
             border: 1px solid black;
@@ -155,10 +150,10 @@
 <body>
 <div class="wrap">
     <div class="header">
-        <p><span style="font-weight: bold; font-size: 35px" >[   {{ data }}   ]</span> 일출일몰 명소</p>
+        <p><span style="font-weight: bold; font-size: 35px">[   {{ data }}   ]</span> 일출일몰 명소</p>
     </div>
     <div class="content">
-        <div class="map" id="map"> </div>
+        <div class="map" id="map"></div>
         <div class="time">
             <p style="font-weight: bold; font-size: 30px"> 정동진 </p>
             <span>일출:</span> <span id="sunrise"></span>&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -169,21 +164,54 @@
 
 </div>
 
-    <div class="sub-menu">
-        <h7> 인기순 명소정렬</h7>
-    </div>
+<div class="sub-menu">
+    <h7> 인기순 명소정렬</h7>
+</div>
 
-    <div class="review">
-        {% for place in places %}
-        <div class="review-in" id="review-1st">
-            <div class="review-in-image">
-                <img src="{{ place['image']}}" alt="review">
-                <p>장소명 :  {{ place['name'] }}<br> 주소 : {{ place['address'] }}</p>
-            </div>
+<div class="review">
+    <script>
+        let i=0;
+        let image_id;
+        var images=new Array();
+
+    </script>
+    {% for place in places %}
+
+    <div class="review-in" id="review-1st">
+        <div class="review-in-image">
+            <img src="{{ place['image']}}" alt="review" id="place-image" class="place-image" onclick="show_detail('{{place.name}}')">
+            <script>
+
+
+                function show_detail(name) {
+
+                     console.log(name)
+                     $.ajax({
+                         type: 'POST',
+                         url: "/detail",
+                         data: {name_give: name},
+
+
+                        success: function (response) {
+                             let place = response['result']
+                            //console.log(place)
+                             let name = place[0].name
+
+                             location.href = "/3page?name=" + name;
+                         },
+                         error: function (request, status, error) {
+                             alert('ajax 통신 실패')
+                             alert(error);
+                         }
+                     })
+
+                }
+            </script>
+
+            <p><span style=“font-weight:bold “>장소명 :  {{ place.name }}</span><br> 주소 : {{ place.address }}</p>
         </div>
-         {% endfor %}
     </div>
-
+    {% endfor %}
 
 
 </div>
@@ -253,11 +281,12 @@
     //마커눌렀을때 일출일몰시간 api 뜨는 함수
     function show_time(marker) {
 
+        $('#sunrise').empty();
+        $('#sunset').empty();
 
         var long = marker.getPosition().getLng();
         var lati = marker.getPosition().getLat();
 
-        console.log(long, lati)
 
         function getCurrentDate() {
             var date = new Date();
@@ -286,8 +315,8 @@
 
             $.ajax({
                 type: "GET",
-                url: "/time?&long="+longitude+"&lati="+latitude+"&date="+date,
-                dataType:'xml',
+                url: "/time?&long=" + longitude + "&lati=" + latitude + "&date=" + date,
+                dataType: 'xml',
                 success: function (response) {
 
                     xmlParsing(response);

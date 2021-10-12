@@ -140,14 +140,55 @@
         }
 
 
+        function postArticle() {
+            let where = $('#where').val()
+            let img = $('#article-url').val()
+            let review = $('#review').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/reviewpage",
+                    data: {where_give:where,upload_give:img,review_give:review},
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            function showArticles() {
+                $.ajax({
+                    type: "GET",
+                    url: "/reviewpage",
+                    data: {},
+                    success: function (response) {
+                        let reviews = response['all_reviews']
+                        for (let i = 0; i < reviews.length; i++){
+                            let where = reviews[i]['where']
+                            let upload = reviews[i]['upload']
+                            let goreview = reviews[i]['review']
+
+                            // console.log(where, upload, review)
+                            let temp_html = `<div class="card">
+                                                <img class="card-img-top"
+                                                     src="${upload}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <a target="_blank" href="" class="card-title">${where}</a>
+                                                    <p class="card-text">${goreview}</p>
+                            <!--                        <p class="card-text comment"> 더보기 </p>-->
+                                                </div>
+                                            </div>`
+                            $('#cards-box').append(temp_html)
+                        }
+                    }
+                })
+            }
 
     </script>
-
-
 </head>
 
 <body>
-
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
             <h1 style="font-weight: bold"> 추억저장소 <span class="lead">/ The memory of that day still haunts me.</span></h1>
@@ -160,16 +201,16 @@
         <div class="posting-box" id="post-box">
             <div>
                 <label>명소위치</label>
-                <input type="text" class="form-control" placeholder="">
+                <input type="text" class="form-control" id="where">
             </div>
 
             <div class="form-group">
                 <label>사진 업로드</label>
-                <input type="file" class="form-control" id="article-url" placeholder="" >
+                <input type="file" class="form-control" id="article-url" >
             </div>
             <div>
-                <label for="exampleFormControlTextarea1">리뷰쓰기</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label>리뷰쓰기</label>
+                <textarea class="form-control" id="review" rows="3"></textarea>
             </div>
             <button type="button" class="btn btn-outline-dark btn-sm" onclick="postArticle()">리뷰저장</button>
 
@@ -177,66 +218,7 @@
         
         <hr class="sector-line">
         <div class="card-columns" id="cards-box">
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
-            <div class="card">
-                    <img class="card-img-top"
-                         src="{{ place['image']}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">{{ place['name'] }}</a>
-                        <p class="card-text">리뷰 내용 - 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-<!--                        <p class="card-text comment"> 더보기 </p>-->
-                    </div>
-                </div>
+
         </div>
     </div>
 </body>
