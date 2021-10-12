@@ -250,8 +250,18 @@
             // 지도를 생성합니다
             var map = new kakao.maps.Map(mapContainer, mapOption);
 
+
+            // 지도에 명소 마커찍기
+            var markerlocation  = new kakao.maps.LatLng(array[0].latitude, array[0].longitude);
+
+            // 마커를 생성합니다
+            var placemarker = new kakao.maps.Marker({
+                position: markerlocation
+            });
+            placemarker.setMap(map);
             // 장소 검색 객체를 생성합니다
             var ps = new kakao.maps.services.Places(map);
+
 
             // 지도에 idle 이벤트를 등록합니다
             kakao.maps.event.addListener(map, 'idle', searchPlaces);

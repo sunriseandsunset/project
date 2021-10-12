@@ -30,6 +30,7 @@ db = client.dbproject
 
 @app.route('/')
 def index():
+<<<<<<< HEAD
     return render_template('1page.html')
     # token_receive = request.cookies.get('mytoken')
     # try:
@@ -131,6 +132,12 @@ def api_valid():
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
+=======
+    # kimp = flask.Respo
+    # nse()
+    # kimp.headers["Access-Control-Allow-Origin"] = "*"
+    return render_template('1page2.html')
+>>>>>>> b7285fc1c6cdeb092b983ac44e76b3ec766df863
 
 
 #지역별 명소 데이터 api 가져오기
