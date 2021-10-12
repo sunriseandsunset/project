@@ -1,7 +1,7 @@
 #샘플데이터 - 강원도 3개 만들기
 from pymongo import MongoClient
 
-# client = MongoClient('mongodb://test:test@localhost', 27017)
+#client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient("mongodb://localhost:27017/")
 
 db = client.dbproject

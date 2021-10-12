@@ -14,7 +14,8 @@ db = client.dbproject
 
 @app.route('/')
 def index():
-    # kimp = flask.Response()
+    # kimp = flask.Respo
+    # nse()
     # kimp.headers["Access-Control-Allow-Origin"] = "*"
     return render_template('1page.html')
 
@@ -30,20 +31,28 @@ def show_place():
         places = db.sample.find({"area": want}, {'_id': False})
 
         places=list(places)
-        print(places)
 
         return render_template('2page.html',data=want,places=places)
 
+#명소의 자세한 페이지
+@app.route('/detail',methods=['POST','GET'])
 def show_detail():
-    if request.method == 'POST':
-        want = request.form.get('inputGroupSelect04')
-        # print(want)
-        places = db.sample.find({"area": want}, {'_id': False})
+    name = request.form['name_give']
+    print(name)
+    places = db.sample.find({"name": name}, {'_id': False})
 
-        places = list(places)
-        print(places)
+    places = list(places)
+    print(places)
+    return {'result': places}
 
-        return render_template('2page.html', data=want, places=places)
+
+@app.route('/3page',methods=['GET'])
+def show_detail2():
+     name = request.args.get('name')
+     places = db.sample.find({"name": name}, {'_id': False})
+     places=list(places)
+     print(places)
+     return render_template('3page.html',place=places)
 
 #공공데이터 api query url 만드는함수
 def get_request_query(url, operation, params, serviceKey):
@@ -67,13 +76,13 @@ def show_time():
         'longitude':longitude,
         'latitude':latitude,
         'dnYn':'y'
+
     }
 
 
     #response=requests.get("http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?&longitude=" + longitude + "&latitude=" + latitude + "&locdate=" + date + "&dnYn=y&ServiceKey=/oZ4AFQEH6WdKfRkiTxU9cNH8VHjxNsZO3PeRFfdDwIQLI3TfmMbjfQvhRSJyrACs3w1ARppFgEkiz5ebTfibg==")
     request_query = get_request_query(URL, OPERATION, PARAMS, SERVICEKEY)
 
-    print('request_query:', request_query)
     response = requests.get(url=request_query)
     return response.text
 
