@@ -17,7 +17,7 @@ def index():
     # kimp = flask.Respo
     # nse()
     # kimp.headers["Access-Control-Allow-Origin"] = "*"
-    return render_template('1page.html')
+    return render_template('1page2.html')
 
 
 #지역별 명소 데이터 api 가져오기
