@@ -52,7 +52,7 @@ def show_detail2():
      places = db.sample.find({"name": name}, {'_id': False})
      places=list(places)
      print(places)
-     return render_template('3page.html',place=places)
+     return render_template('3page-.html',place=places)
 
 #공공데이터 api query url 만드는함수
 def get_request_query(url, operation, params, serviceKey):

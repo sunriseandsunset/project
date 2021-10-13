@@ -8,7 +8,7 @@ db = client.dbproject
 ## HTML을 주는 부분
 @app.route('/')
 def home():
-    return render_template('review-layout.html')
+    return render_template('review.html')
 
 
 ## API 역할을 하는 부분
