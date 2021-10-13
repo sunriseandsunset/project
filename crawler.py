@@ -21,7 +21,7 @@ for place in places:
         one_image=place.select_one(' a > img')
         if one_title is not None:
             print('명소:',  one_title.text)
-        if one_location is not None:
+        if one_location is not None :
             print('장소:', one_location.text)
         if one_image is not None:
             print('이미지 :', one_image['src'])
