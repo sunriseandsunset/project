@@ -28,9 +28,6 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
     <link rel="stylesheet" href="static/review.css">
 
-    <style>
-
-    </style>
     <script>
         $(document).ready(function () {
                 show_review();
@@ -50,14 +47,18 @@
 
 
         function post_review() {
+            let review_title=$('#title').val()
             let where = $('#where').val()
-            let img = $('#files').val()
             let review = $('#review').val()
 
-                $.ajax({
+            //파일경로에서 fakepath없애기
+            let filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+            console.log(filename)
+
+            $.ajax({
                     type: "POST",
                     url: "/reviewpage",
-                    data: {where_give:where,upload_give:img,review_give:review},
+                    data: {title_give:review_title,where_give:where,upload_give:filename,review_give:review},
                     success: function (response) { // 성공하면
                         alert(response["msg"]);
                         window.location.reload();
@@ -73,6 +74,7 @@
                     let where=all_reviews[i]['where']
                     let upload=all_reviews[i]['upload']
                     let goreview=all_reviews[i]['review']
+                    let place_title=all_reviews[i]['title']
 
 
 
@@ -81,7 +83,7 @@
                                                       src="${upload}"
                                                       alt="Card image cap">
                                                  <div class="card-body">
-                                                     <a target="_blank" href="" class="card-title">${where}</a>
+                                                     <a target="_blank" href="" class="card-title">${place_title}</a>
                                                      <p class="card-text">${goreview}</p>
                              <!--                        <p class="card-text comment"> 더보기 </p>-->
                                                  </div>
@@ -95,13 +97,14 @@
             }
 
 
+
     </script>
 </head>
 
 <body>
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 style="font-weight: bold"> 추억저장소 <span class="lead">/ The memory of that day still haunts me.</span></h1>
+            <h1 style="font-weight: bold">"{{ place }}" 추억저장소 <span class="lead">/ The memory of that day still haunts me.</span></h1>
 
               <hr class="line-title">
               <a onclick="openclose()" id="btn-posting-box" class="btn btn-dark btn-sm" href="#" role="button">리뷰작성하기</a>
@@ -109,7 +112,12 @@
         </div>
 
         <div class="posting-box" id="post-box">
-            <div>
+            <div id="title-box">
+                <label>리뷰 제목</label>
+                <input id="title" type="text" placeholder="제목을 입력해주세요!">
+
+            </div>
+            <div id="place-box">
                 <label>명소 이름</label>
                 <select onchange="categoryChange(this)">
                     <option>지역명 선택!</option>
@@ -128,55 +136,13 @@
                     <option value="부산">부산광역시</option>
                     <option value="울릉군">독도/울릉도</option>
                 </select>
-                <script>
-                    function categoryChange(e) {
-                        var area_a = ["선유도공원","하늘공원","아차산정상"];
-                        var area_b = ["탄도항","궁평리마을"];
-                        var area_c = ["민머루해수욕장","동막해수욕장","을왕리해수욕장","영종도","마시안해변"];
-                        var area_d = ["하조대","남애항","정동진해변","태백산","추암해수욕장"];
-                        var area_e = ["도담상봉"];
-                        var area_f = ["왜목마을","간월암","꽃지해안공원","마량포해돋이마을"];
-                        var area_g = ["변산반도","채석강","곰소항"];
-                        var area_h = ["도리포","순천만","향일암","세방낙조전망대","남열해수욕장","땅끝마을","완도타워"];
-                        var area_i = ["부석사","망양정","호미곶","읍천항","삼사해상공원","혼신지"];
-                        var area_j = ["우포늪","지리산 천왕봉","보리암"];
-                        var area_k = ["강양항","간절곶"];
-                        var area_l = ["죽성성당","다대포"];
-                        var area_m = ["울릉도","독도"];
-
-
-
-                        var target = document.getElementById("where");
-
-                        if (e.value == "서울") var d = area_a;
-                        else if (e.value == "경기") var d = area_b;
-                        else if (e.value == "인천") var d = area_c;
-                        else if (e.value == "강원") var d = area_d;
-                        else if (e.value == "충북") var d = area_e;
-                        else if (e.value == "충남") var d = area_f;
-                        else if (e.value == "전북") var d = area_g;
-                        else if (e.value == "전남") var d = area_h;
-                        else if (e.value == "경북") var d = area_i;
-                        else if (e.value == "경남") var d = area_j;
-                        else if (e.value == "울산") var d = area_k;
-                        else if (e.value == "부산") var d = area_l;
-                        else if (e.value == "울릉군") var d = area_m;
-
-                        target.options.length = 0;
-
-                        for (x in d) {
-                            var opt = document.createElement("option");
-                            opt.value = d[x];
-                            opt.innerHTML = d[x];
-                            target.appendChild(opt);
-                        }
-                    }
-                </script>
+                <script src="/static/review_category.js"></script>
 
                 <select id="where">
                     <option>명소 이름을 선택해주세요</option>
                 </select>
             </div>
+
 
             <div class="form-group">
                 <input id="files" type="file" />
@@ -185,7 +151,7 @@
                 <script src="/static/file_upload.js"></script>
             </div>
             <div>
-                <label>리뷰쓰기</label>
+                <label>리뷰 내용</label>
                 <textarea class="form-control" id="review" rows="3"></textarea>
             </div>
             <button type="button" class="btn btn-outline-dark btn-sm" onclick="post_review()">리뷰저장</button>
