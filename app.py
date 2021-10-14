@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import json
 import xmltodict
 import sys
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -49,10 +50,18 @@ def show_detail():
 @app.route('/3page',methods=['GET'])
 def show_detail2():
      name = request.args.get('name')
+     #명소에 대한 정보 불러오기
      places = db.sample.find({"name": name}, {'_id': False})
+     #명소에 대한 리뷰 불러오기
+     # reviews= db.reviews.find({"where": name}, {'_id': False})
+     #최신리뷰 3개만 3페이지에 나타나게
+     reviews = list(db.reviews.find({"where": name}, {'_id': False}).sort([("reg_date", -1)]))
      places=list(places)
-     print(places)
-     return render_template('3page-.html',place=places)
+     reviews=list(reviews)
+     if len(reviews)>3:
+         reviews=reviews[0:3]
+     print(reviews)
+     return render_template('3page-.html',place=places,reviews=reviews)
 
 #공공데이터 api query url 만드는함수
 def get_request_query(url, operation, params, serviceKey):
@@ -90,24 +99,29 @@ def show_time():
 @app.route('/reviewpage', methods=['GET'])
 def go_reviews():
     place = request.args.get('place')
-    print(place)
+
     want_reviews = list(db.reviews.find({'where':place}, {'_id': False}))
-    print(want_reviews)
-    return render_template('review.html', reviews=want_reviews)
+
+    return render_template('review.html', reviews=want_reviews,place=place)
 
 
 
 ## API 역할을 하는 부분
 @app.route('/reviewpage', methods=['POST'])
 def write_review():
+    title_receive=request.form['title_give']
     where_receive = request.form['where_give']
     upload_receive = request.form['upload_give']
+    print(upload_receive)
     review_receive = request.form['review_give']
+    image_url='https://sparta-forposting.s3.ap-northeast-2.amazonaws.com/'+upload_receive
 
     doc = {
         'where':where_receive,
-        'upload':upload_receive,
-        'review':review_receive
+        'title':title_receive,
+        'upload':image_url,
+        'review':review_receive,
+        'reg_date': datetime.now(),
     }
     db.reviews.insert_one(doc)
 

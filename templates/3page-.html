@@ -26,41 +26,23 @@
 <body>
     <div class="wrap">
         <div class="head">
-            <strong>{{ place[0].name }} </strong> <span> / {{ place[0].address}}</span>
+            <strong>{{ place[0].name }} </strong> <span> {{ place[0].address}}</span>
         </div>
         <hr class="sector-line">
+
+
+
         <div class="content">
-
-            <div class="card review">
-                <img class="card-img-top"
-                     src="${upload}"
-                     alt="Card image cap">
+            {% for review in reviews%}
+            <div class="card" style="width: 18rem;">
+                <img src="{{review.upload}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                     <a target="_blank" href="" class="card-title">정동진</a>
-                     <p class="card-text">와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 </p>
+                    <h5 class="card-title"><strong>{{ review.title }}</strong></h5>
+                    <p class="card-text">where : {{review.where}}</p>
+
                 </div>
             </div>
-
-            <div class="card review">
-                <img class="card-img-top"
-                     src="${upload}"
-                     alt="Card image cap">
-                <div class="card-body">
-                     <a target="_blank" href="" class="card-title">정동진</a>
-                     <p class="card-text">와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 </p>
-                </div>
-            </div>
-
-            <div class="card review">
-                <img class="card-img-top"
-                     src="${upload}"
-                     alt="Card image cap">
-                <div class="card-body">
-                     <a target="_blank" href="" class="card-title">정동진</a>
-                     <p class="card-text">와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 와 진짜 좋아요 대박사건 </p>
-                </div>
-            </div>
-
+            {%endfor%}
         </div>
 
         <a href="/reviewpage?place={{ place[0].name }}" class="more"> 리뷰작성 및 더보기 ></a>
