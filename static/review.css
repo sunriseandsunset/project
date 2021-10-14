@@ -1,0 +1,59 @@
+*{
+
+        }
+
+        .lead {
+            font-family: 'Birthstone', cursive;
+            font-weight: lighter;
+            font-size: 30px;
+            color: black;
+            line-height:50px;
+        }
+
+        .jumbotron{
+            width: 900px;
+            margin: 30px auto 10px auto;
+            border-radius: 2px;
+
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
+            background-position: left;
+            background-size: 1200px;
+        }
+
+        .container {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .card-columns {
+            width: 900px;
+            margin: auto;
+        }
+
+        .card-comment {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .posting-box {
+            width: 900px;
+            margin: 0 auto 20px auto;
+
+            border: 1px solid black;
+            border-radius: 2px;
+            padding: 30px;
+
+            display: none;
+
+        }
+
+        .sector-line {
+            width: 900px;
+            border: 0;
+            height: 3px;
+            background: black;
+        }
+
+        .btn-outline-dark {
+            margin-top: 20px;
+        }

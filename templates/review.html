@@ -25,108 +25,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
+    <link rel="stylesheet" href="static/review.css">
 
     <style>
-        *{
-
-        }
-
-        .lead {
-            font-family: 'Birthstone', cursive;
-            font-weight: lighter;
-            font-size: 30px;
-            color: black;
-            line-height:50px;
-        }
-
-        .jumbotron{
-            width: 900px;
-            margin: 30px auto 10px auto;
-            border-radius: 2px;
-
-            background-image: url("https://cdn.pixabay.com/photo/2016/11/23/17/56/couple-1854081_1280.jpg");
-            background-position: left;
-            background-size: 1200px;
-        }
-
-        .container {
-            padding-left: 50px;
-            padding-right: 50px;
-        }
-
-        .card-columns {
-            width: 900px;
-            margin: auto;
-        }
-
-        .card-comment {
-            font-weight: bold;
-            color: blue;
-        }
-
-        .posting-box {
-            width: 900px;
-            margin: 0 auto 20px auto;
-
-            border: 1px solid black;
-            border-radius: 2px;
-            padding: 30px;
-
-            display: none;
-
-        }
-        
-        .sector-line {
-            width: 900px;
-            border: 0;
-            height: 3px;
-            background: black;
-        }
-
-        .btn-outline-dark {
-            margin-top: 20px;
-        }
 
     </style>
     <script>
         $(document).ready(function () {
-                showArticles();
+                show_review();
             });
-        // $(document).ready(function () {
-        //     $('#cards-box').empty();
-        //     listing();
-        // });
-
-        // function listing() {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "http://spartacodingclub.shop/post",
-        //         data: {},
-        //         success: function (response) {
-        //             let rows = response['articles']
-        //             for (let i = 0; i < rows.length; i++){
-        //                 let comment = rows[i]['comment']
-        //                 let desc = rows[i]['desc']
-        //                 let title = rows[i]['title']
-        //                 let img = rows[i]['image']
-        //                 let url = rows[i]['url']
-        //
-        //                 let temp_html = `<div class="card" style="width: 18rem;">
-        //                                     <img class="card-img-top"
-        //                                          src="${img}"
-        //                                          alt="Card image cap">
-        //                                     <div class="card-body">
-        //                                         <a class="card-title" href="${url}">${title}</a>
-        //                                         <p class="card-text">${desc}</p>
-        //                                         <p class="card-comment">${comment}</p>
-        //                                     </div>
-        //                                 </div>`
-        //                 $('#cards-box').append(temp_html)
-        //             }
-        //         }
-        //     })
-        // }
-
 
         function openclose() {
             let status = $('#post-box').css('display');
@@ -134,15 +42,16 @@
                 $('#post-box').hide();
                 $('#btn-posting-box').text('리뷰작성하기');
             } else {
+
                 $('#post-box').show();
                 $('#btn-posting-box').text('리뷰작성닫기');
             }
         }
 
 
-        function postArticle() {
+        function post_review() {
             let where = $('#where').val()
-            let img = $('#article-url').val()
+            let img = $('#files').val()
             let review = $('#review').val()
 
                 $.ajax({
@@ -156,34 +65,35 @@
                 })
             }
 
-            function showArticles() {
-                $.ajax({
-                    type: "GET",
-                    url: "/reviewpage",
-                    data: {},
-                    success: function (response) {
-                        let reviews = response['all_reviews']
-                        for (let i = 0; i < reviews.length; i++){
-                            let where = reviews[i]['where']
-                            let upload = reviews[i]['upload']
-                            let goreview = reviews[i]['review']
 
-                            // console.log(where, upload, review)
-                            let temp_html = `<div class="card">
-                                                <img class="card-img-top"
-                                                     src="${upload}"
-                                                     alt="Card image cap">
-                                                <div class="card-body">
-                                                    <a target="_blank" href="" class="card-title">${where}</a>
-                                                    <p class="card-text">${goreview}</p>
-                            <!--                        <p class="card-text comment"> 더보기 </p>-->
-                                                </div>
-                                            </div>`
-                            $('#cards-box').append(temp_html)
-                        }
-                    }
-                })
+            function show_review(){
+                let all_reviews={{ reviews|tojson }};
+                for(let i=0;i<all_reviews.length;i++)
+                {
+                    let where=all_reviews[i]['where']
+                    let upload=all_reviews[i]['upload']
+                    let goreview=all_reviews[i]['review']
+
+
+
+                    let temp_html = `<div class="card">
+                                                 <img class="card-img-top"
+                                                      src="${upload}"
+                                                      alt="Card image cap">
+                                                 <div class="card-body">
+                                                     <a target="_blank" href="" class="card-title">${where}</a>
+                                                     <p class="card-text">${goreview}</p>
+                             <!--                        <p class="card-text comment"> 더보기 </p>-->
+                                                 </div>
+                                             </div>`
+                    $('#cards-box').append(temp_html)
+
+
+
+                }
+
             }
+
 
     </script>
 </head>
@@ -269,14 +179,16 @@
             </div>
 
             <div class="form-group">
-                <label>사진 업로드</label>
-                <input type="file" class="form-control" id="article-url" >
+                <input id="files" type="file" />
+                <button id="button">사진 업로드</button>
+                <script src="/static/app.js"></script>
+                <script src="/static/file_upload.js"></script>
             </div>
             <div>
                 <label>리뷰쓰기</label>
                 <textarea class="form-control" id="review" rows="3"></textarea>
             </div>
-            <button type="button" class="btn btn-outline-dark btn-sm" onclick="postArticle()">리뷰저장</button>
+            <button type="button" class="btn btn-outline-dark btn-sm" onclick="post_review()">리뷰저장</button>
 
         </div>
         

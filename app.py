@@ -86,6 +86,17 @@ def show_time():
     response = requests.get(url=request_query)
     return response.text
 
+
+@app.route('/reviewpage', methods=['GET'])
+def go_reviews():
+    place = request.args.get('place')
+    print(place)
+    want_reviews = list(db.reviews.find({'where':place}, {'_id': False}))
+    print(want_reviews)
+    return render_template('review.html', reviews=want_reviews)
+
+
+
 ## API 역할을 하는 부분
 @app.route('/reviewpage', methods=['POST'])
 def write_review():
@@ -102,12 +113,12 @@ def write_review():
 
     return jsonify({'msg': '저장완료!'})
 
-
-@app.route('/reviewpage', methods=['GET'])
-def read_reviews():
-    go_reviews = list(db.reviews.find({}, {'_id': False}))
-
-    return jsonify({'all_reviews': go_reviews})
+#
+# @app.route('/reviewpage', methods=['GET'])
+# def read_reviews():
+#     go_reviews = list(db.reviews.find({}, {'_id': False}))
+#
+#     return jsonify({'all_reviews': go_reviews})
 
 
 if __name__ == "__main__":
