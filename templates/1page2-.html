@@ -30,7 +30,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="static/1page.css">
+    <script>
+        function start_login() {
+            $.ajax({
+                    type: "GET",
+                    url: "/login",
+                    data: {},
+                    success: function (response) {
+                        window.location.href='/login'
+                        $('#button').toggleClass('is-hidden')
+                    }
+                });
 
+        }
+        function mypage() {
+            $.ajax({
+                type: "GET",
+                url: "/mypage",
+                data: {},
+                success: function (response) {
+                    window.location.href='/mypage'
+                }
+            });
+        }
+    </script>
+    <style>
+        button {
+            width: 100px;
+
+        }
+        #my_button {
+            {#display: none;#}
+        }
+    </style>
 </head>
 
 <body>
@@ -38,52 +70,10 @@
         <div class="image">
 
             <div class="content">
-                <h1>Dear, my sun</h1>
+                <h1>Dear, my sun</h1><div id="my_button"><button onclick="mypage()">마이페이지</button><button>리뷰작성</button></div>
                 <h6><span class="strong">일출&일몰 명소,</span> <br> 사랑하는 사람과 함께하세요</h6>
-<!--                <button class="login"> Log in </button>-->
+                <button class="login" onclick="start_login()"> Log in </button>
 
-                <div class="Login">
-                    <button onclick="document.getElementById('id01').style.display='block'" style="width:100px; height:30px;">Login</button>
-
-                      <div id="id01" class="modal">
-
-                      <form class="modal-content animate" action="/action_page.php" method="post">
-                        <div class="imgcontainer">
-                          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                        </div>
-
-                        <div class="container">
-                          <label><b>Username</b></label>
-                          <input type="text" placeholder="Enter Username" name="uname" required>
-
-                          <label><b>Password</b></label>
-                          <input type="password" placeholder="Enter Password" name="psw" required>
-
-                          <button type="submit">Login</button>
-                          <label>
-                            <input type="checkbox" checked="checked" name="remember"> Remember me
-                          </label>
-                        </div>
-
-                        <div class="container" style="background-color:#f1f1f1">
-                          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                          <span class="psw">Forgot <a href="#">password?</a></span>
-                        </div>
-                      </form>
-                      </div>
-
-                    <script>
-                    // Get the modal
-                    var modal = document.getElementById('id01');
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                    }
-                    </script>
-                </div>
 
                     <form action = "/place" method = "POST" name="selectarea">
 

@@ -6,19 +6,121 @@ from bs4 import BeautifulSoup
 import json
 import xmltodict
 import sys
+<<<<<<< HEAD
 from datetime import datetime
+=======
+import jwt
+import datetime
+import hashlib
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+
+
+
+
+>>>>>>> origin/main_sparta
 
 app = Flask(__name__)
 
+SECRET_KEY = 'SPARTA'
+
+# client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient("mongodb://localhost:27017/")
 db = client.dbproject
 
 @app.route('/')
 def index():
+<<<<<<< HEAD
     # kimp = flask.Respo
     # nse()
     # kimp.headers["Access-Control-Allow-Origin"] = "*"
     return render_template('1page2-.html')
+=======
+    return render_template('1page2-.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('1page2-.html', user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+
+
+
+
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    # 로그인
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+         'id': username_receive,
+         'exp': datetime.utcnow() + timedelta(seconds=5)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
+# 로그인 페이지
+@app.route('/login', methods=['GET'])
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+
+
+# 회원가입
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up():
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    doc = {
+        "username": username_receive,                               # 아이디
+        "password": password_hash,                                  # 비밀번호
+        "profile_name": "",
+        "profile_pic": "",                                          # 프로필 사진 파일 이름
+        "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
+        "profile_info": ""                                          # 프로필 한 마디
+    }
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
+
+
+# 아이디 중복확인
+@app.route('/sign_up/check_dup', methods=['POST'])
+def check_dup():
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+# 마이페이지
+@app.route('/mypage', methods=['GET'])
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('mypage.html', user_info=user_info)
+
+    except (jwt.exceptions.DecodeError,jwt.ExpiredSignatureError):
+        return redirect(url_for("/"))
+
+
+
+
+>>>>>>> origin/main_sparta
 
 
 #지역별 명소 데이터 api 가져오기
@@ -133,6 +235,10 @@ def write_review():
 #     go_reviews = list(db.reviews.find({}, {'_id': False}))
 #
 #     return jsonify({'all_reviews': go_reviews})
+
+
+
+
 
 
 if __name__ == "__main__":
