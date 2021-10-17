@@ -31,7 +31,7 @@
             display: flex;
             justify-content: space-between;
             width: 900px;
-            height: 350px;
+            height: 280px;
 
         }
         /*사진*/
@@ -55,14 +55,6 @@
             transition: 1.2s;
         }
 
-        /*리뷰*/
-
-        /*.review-in:hover {*/
-        /*    font-weight: bold;*/
-        /*}*/
-        /*a:hover {*/
-        /*    text-decoration: none;*/
-        /*}*/
 
         .sub-menu {
             width: 100%;
@@ -71,7 +63,7 @@
             color: white;
             text-align: center;
             font-style: italic;
-            margin: 30px auto 0px auto;
+            margin: 60px auto 0px auto;
             /*margin-top: 3px*/
         }
         .card-body{
@@ -120,8 +112,18 @@
              width: 100%;
              height: 100%;
          }
-
-
+        .noreview{
+            text-align: center;
+            margin: 30px auto 30px auto;
+        }
+        .my-box {
+            height: 200px;
+            border:10px solid wheat;
+            padding:30px;
+            width: 900px;
+            border-radius: 2em;
+            background-color: antiquewhite;
+        }
 
 
 .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}

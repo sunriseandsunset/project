@@ -100,6 +100,16 @@
         <hr class="sector-line">
 
         <div class="content">
+
+                {% if not reviews %}
+                <div class="my-box">
+            <div class="noreview">
+                <h2>작성된 리뷰가 존재하지 않습니다 <span style='font-size:40px;'>&#127774;</span></h2>
+                 </div>
+            </div>
+
+                {%endif%}
+
             {% for review in reviews%}
             <div class="card" style="width: 18rem;">
                 <img src="{{review.upload}}" class="card-img-top" alt="...">
@@ -110,9 +120,11 @@
                 </div>
             </div>
             {%endfor%}
-        </div>
 
-        <a href="/reviewpage?place={{ place[0].name }}" class="more"> 리뷰작성 및 더보기 ></a>
+        </div>
+             <a href="/reviewpage?place={{ place[0].name }}" class="more" style="color: black; font-weight: bold; font-size: 18px; margin-bottom: 2px"> 리뷰작성 및 더보기  &#9997;</a>
+
+
 
         <div class="sub-menu">
             <h7>편의시설</h7>
