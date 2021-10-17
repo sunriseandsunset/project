@@ -90,8 +90,8 @@
                     },
                     success: function (response) {
                         if (response['result'] == 'success') {
-                            $.cookie('mytoken', response['token'], {path: '/'});
-                            window.location.replace("/")
+                            $.cookie('mytoken', response['token'], {path: '/index'});//토큰을 쿠키에 저장
+                            window.location.replace('/index')
                         } else {
                             alert(response['msg'])
                         }

@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
-
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link rel="stylesheet" href="static/1page.css">
     <script>
         function start_login() {
@@ -44,11 +44,14 @@
 
         }
         function mypage() {
+
+            $.cookie('mytoken', '{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
             $.ajax({
                 type: "GET",
-                url: "/mypage",
+                url: "/mypage?",
                 data: {},
                 success: function (response) {
+                    $.cookie('mytoken','{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
                     window.location.href='/mypage'
                 }
             });
@@ -74,9 +77,10 @@
                 <h6><span class="strong">일출&일몰 명소,</span> <br> 사랑하는 사람과 함께하세요</h6>
                 <button class="login" onclick="start_login()"> Log in </button>
 
-
                     <form action = "/place" method = "POST" name="selectarea">
-
+                        <script>
+                            $.cookie('mytoken', '{{ token }}', {path: '/place'});//토큰을 쿠키에 저장
+                        </script>
                      <div class="select-box">
                         <div class="group" id="search">
                             <select class="custom-select" name="inputGroupSelect04">
@@ -139,7 +143,7 @@
                 </div>
                 <div class="ficture 5nd">
                     <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
-                    <div class="ment">
+                    <div class="ment" >
                         아이디 : kimbuja <br> 위치 : 이 세상 어딘가
                     </div>
                 </div>

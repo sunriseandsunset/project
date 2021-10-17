@@ -29,7 +29,7 @@
 <!--    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link rel="stylesheet" href="../static/2page-swiper.css">
 
     <title>Dear,my sun</title>
@@ -77,7 +77,7 @@
                                 let place = response['result']
                                 //console.log(place)
                                 let name = place[0].name
-
+                                $.cookie('mytoken', '{{ token }}', {path: '/3page'});
                                 location.href = "/3page?name=" + name;
                             },
                             error: function (request, status, error) {

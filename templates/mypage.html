@@ -1,5 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,40 +8,195 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <title>Dear,my sun</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
+    <link rel="stylesheet" href="static/review.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-    <title>Title</title>
-    <style>
-        button {
-            margin: 10px 30px;
-        }
-    </style>
+
     <script>
+        $(document).ready(function () {
+                show_review();
+                show_heart();
+            });
+
+        function openclose() {
+            let status = $('#post-box').css('display');
+            if (status == 'block'){
+                $('#post-box').hide();
+                $('#btn-posting-box').text('리뷰작성하기');
+            } else {
+
+                $('#post-box').show();
+                $('#btn-posting-box').text('리뷰작성닫기');
+            }
+        }
+
+
+        function post_review() {
+            let review_title=$('#title').val()
+            let where = $('#where').val()
+            let review = $('#review').val()
+
+            //파일경로에서 fakepath없애기
+            let filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+            console.log(filename)
+
+            $.ajax({
+                    type: "POST",
+                    url: "/reviewpage",
+                    data: {title_give:review_title,where_give:where,upload_give:filename,review_give:review},
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+
+            function show_review(){
+                let all_reviews={{ reviews|tojson }};
+                for(let i=0;i<all_reviews.length;i++)
+                {
+                    let where=all_reviews[i]['where']
+                    let place_title=all_reviews[i]['title']
+                    let upload=all_reviews[i]['upload']
+                    let goreview=all_reviews[i]['review']
+
+
+
+                    let temp_html = `<div class="card">
+                                                 <img class="card-img-top"
+                                                      src="${upload}"
+                                                      alt="Card image cap">
+                                                 <div class="card-body">
+                                                     <a target="_blank" href="" class="card-title">${place_title}</a>
+                                                     <p class="card-text">${goreview}</p>
+                             <!--                        <p class="card-text comment"> 더보기 </p>-->
+                                                 </div>
+                                             </div>`
+                    $('#cards-box').append(temp_html)
+
+
+
+                }
+
+            }
+
+             function show_heart(){
+                let all_reviews={{ heart_place|tojson }};
+
+                for(let i=0;i<all_reviews.length;i++)
+                {
+                    let name=all_reviews[i]['place_name']
+                    $.cookie('mytoken', '{{ token }}', {path: '/3page'});//토큰을 쿠키에 저장
+                    let temp_html = `<div class="card">
+
+                                                 <div class="card-body">
+
+
+
+                                                    <a href="/3page?name=${name}" class="card-title">${name}</a>
+
+                                                 </div>
+                                      </div>`
+                    $('#heart-box').append(temp_html)
+
+
+
+                }
+
+            }
+
+
 
     </script>
 </head>
+
 <body>
-<h1>마이페이지</h1>
-<button>리뷰모아보기</button><br>
-<button>하트명소보기</button>
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 style="font-weight: bold">About "{{ username }}" <span class="lead">/This is {{ username }}'s mypage .</span></h1>
+
+              <hr class="line-title">
+              <a onclick="openclose()" id="btn-posting-box" class="btn btn-dark btn-sm" href="#" role="button">리뷰작성하기</a>
+          </div>
+        </div>
+
+        <div class="posting-box" id="post-box">
+            <div id="title-box">
+                <label>리뷰 제목</label>
+                <input id="title" type="text" placeholder="제목을 입력해주세요!">
+
+            </div>
+            <div id="place-box">
+                <label>명소 이름</label>
+                <select onchange="categoryChange(this)">
+                    <option>지역명 선택!</option>
+                    <option value="서울">서울특별시</option>
+                    <option value="경기">경기도</option>
+                    <option value="인천">인천광역시</option>
+                    <option value="강원">강원도</option>
+                    <option value="충북">충청북도</option>
+                    <option value="충남">충청남도</option>
+
+                    <option value="전북">전라북도</option>
+                    <option value="전남">전라남도</option>
+                    <option value="경북">경상북도</option>
+                    <option value="경남">경상남도</option>
+                    <option value="울산">울산광역시</option>
+                    <option value="부산">부산광역시</option>
+                    <option value="울릉군">독도/울릉도</option>
+                </select>
+                <script src="/static/review_category.js"></script>
+
+                <select id="where">
+                    <option>명소 이름을 선택해주세요</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <input id="files" type="file" />
+                <button id="button">사진 업로드</button>
+                <script src="/static/app.js"></script>
+                <script src="/static/file_upload.js"></script>
+            </div>
+            <div>
+                <label>리뷰 내용</label>
+                <textarea class="form-control" id="review" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-outline-dark btn-sm" onclick="post_review()">리뷰저장</button>
+
+        </div>
+
+        <hr class="sector-line">
+        <div class="list">
+            <h3>My reviews</h3>
+            <div class="card-columns" id="cards-box">
+
+            </div>
+            <h3>I Like</h3>
+            <div class="card-columns" id="heart-box">
+
+            </div>
+        </div>
 </body>
+
 </html>
