@@ -1,12 +1,11 @@
 import flask
-from flask import Flask, render_template, jsonify, request,redirect,url_for,flash
+from flask import Flask, render_template, jsonify, request,redirect,url_for
 from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
 import json
 import xmltodict
 import sys
-
 from datetime import datetime
 import jwt
 import datetime
@@ -66,7 +65,7 @@ def sign_in():
     if result is not None:
         payload = {
          'id': username_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=500)  # 로그인 24시간 유지
+         'exp': datetime.utcnow() + timedelta(seconds=4000)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 

@@ -2,8 +2,6 @@
 <html lang="ko">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
@@ -11,26 +9,17 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
 
     <!-- Link Swiper's CSS -->
 <!--    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
     <link rel="stylesheet" href="../static/2page-swiper.css">
+
+        <!--head-->
+        {% include "include/header-meta.html" %}
+
 
     <title>Dear,my sun</title>
     <!--<script src="/static/show_place.js"></script>-->
@@ -38,7 +27,7 @@
 <body>
     <div class="wrap">
         <div class="header">
-            <p><span style="font-weight: bold; font-size: 35px">[   {{ data }}   ]</span> 일출일몰 명소</p>
+            <p><span style="font-weight: bold; font-size: 35px;">[   {{ data }}   ]</span> 일출일몰 명소</p>
         </div>
         <div class="content">
             <div class="map" id="map"></div>
@@ -51,7 +40,7 @@
         </div>
     </div>
 
-    <div class="sub-menu"><h7> 인기순 명소정렬</h7></div>
+    <div class="sub-menu"><p> 인기순 명소정렬</p></div>
 
 <!-- Slider main container -->
     <div class="review swiper">
@@ -77,7 +66,8 @@
                                 let place = response['result']
                                 //console.log(place)
                                 let name = place[0].name
-                                $.cookie('mytoken', '{{ token }}', {path: '/3page'});
+
+                                $.cookie('mytoken', '{{ token }}', {path: '/3page'}); //로그인시 3페이지로 가능
                                 location.href = "/3page?name=" + name;
                             },
                             error: function (request, status, error) {

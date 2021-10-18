@@ -1,0 +1,86 @@
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+
+        <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+<!--    로그인쿠키-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+    body{
+         font-family: "Helvetica Nene", Helvetica, Arial, 맑은 고딕;,"malgun gothic", sans-serif;
+     }
+    </style>
+
+    <header class="p-1 bg-warning text-white" style="border-bottom:5px solid black;">
+            <div class="container" style="width: 1150px; height: 45px;">
+              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="height: 45px;">
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                  <li><a href="#" class="nav-link px-1 text-dark" style="margin-right: 5px;" onclick="location.href='/'">Home</a></li>
+<!--                  <li><a href="#" class="nav-link px-1 text-white">Features</a></li>-->
+<!--                  <li><a href="#" class="nav-link px-1 text-white">Pricing</a></li>-->
+                  <li class="right"><a href="#" class="nav-link px-1 text-white"style="margin-right: 5px;" onclick="location.href='/reviewpage'">Review</a></li>
+                  <li id="my_button"><a href="#" class="nav-link px-1 text-white" onclick="mypage()">Mypage</a></li>
+                </ul>
+<!--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">-->
+<!--                  <input type="search" class="form-control form-control-dark form-control-sm" placeholder="Search..." aria-label="Search">-->
+<!--                </form>-->
+
+                <div class="text-end">
+                  <button type="button" class="btn btn-dark me-2 btn-sm" style="width: 80px; height: 30px;"
+                          onclick="start_login()">
+                  Login</button>
+                </div>
+              </div>
+            </div>
+
+    </header>
+
+    <script>
+        function start_login() {
+            $.ajax({
+                    type: "GET",
+                    url: "/login",
+                    data: {},
+                    success: function (response) {
+                        window.location.href='/login'
+                        $('#button').toggleClass('is-hidden')
+                    }
+                });
+        }
+
+        function mypage() {
+            $.cookie('mytoken', '{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
+            $.ajax({
+                type: "GET",
+                url: "/mypage?",
+                data: {},
+                success: function (response) {
+                    $.cookie('mytoken','{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
+                    window.location.href='/mypage'
+                }
+            });
+        }
+    </script>

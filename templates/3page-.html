@@ -2,35 +2,19 @@
 <html lang="ko">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--head-->
+        {% include "include/header-meta.html" %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <link rel="stylesheet" href="static/3page.css">
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
     <title>Dear,my sun</title>
 </head>
+
 <script>
-
     function toggle_like(place_name, type) {
-
         console.log(place_name, type)
         let $a_like = $(`#${place_name} a[aria-label='heart']`)
         let $i_like = $a_like.find("i")
@@ -64,15 +48,10 @@
                     $a_like.find("span.like-num").text(response["count"])
                 }
             })
-
         }
-
-
     }
-
-
-
 </script>
+
 <body>
     <div class="wrap">
         <div class="head">
@@ -81,9 +60,9 @@
                             <a class="is-sparta" aria-label="heart" onclick="toggle_like('{{ place[0].name}}', 'heart')" >
                                 <span class="icon is-small"><i class="fa fa-heart" aria-hidden="true"  style="font-size:48px; " id="heart"></i></span>&nbsp;<span class="like-num"> {{ place_heart }}</span>
                             </a>
-
             </span>
         </div>
+
         <script>
                 let is_heart = '{{heart_user}}';
                 console.log(is_heart)
@@ -91,22 +70,19 @@
                 {
                     console.log('나는 하트 안눌렀음')
                     $('#heart').attr('class','fa fa-heart-o')
-
                 }
         </script>
 
-
-
-        <hr class="sector-line">
+<!--        <hr class="sector-line">-->
 
         <div class="content">
 
-                {% if not reviews %}
-                <div class="my-box">
+               {% if not reviews %}
+
             <div class="noreview">
-                <h2>작성된 리뷰가 존재하지 않습니다 <span style='font-size:40px;'>&#127774;</span></h2>
-                 </div>
+                <p>작성된 리뷰가 존재하지 않습니다 <span style='font-size:20px;'>&#127774;</span></p>
             </div>
+
 
                 {%endif%}
 
@@ -120,10 +96,8 @@
                 </div>
             </div>
             {%endfor%}
-
         </div>
-             <a href="/reviewpage?place={{ place[0].name }}" class="more" style="color: black; font-weight: bold; font-size: 18px; margin-bottom: 2px"> 리뷰작성 및 더보기  &#9997;</a>
-
+            <a href="/reviewpage?place={{ place[0].name }}" class="more" style="color: black; font-weight: bold; font-size: 16px; margin-bottom: 2px"> 리뷰작성 및 더보기  &#9997;</a>
 
 
         <div class="sub-menu">
