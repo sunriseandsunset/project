@@ -1,6 +1,7 @@
 import flask
-
-
+import boto3
+from flask_cors import CORS
+import os
 from flask import Flask, render_template, jsonify, request,redirect,url_for,flash
 from pymongo import MongoClient
 import requests
@@ -9,7 +10,6 @@ import json
 import xmltodict
 import sys
 
-from datetime import datetime
 import jwt
 import datetime
 import hashlib
@@ -17,20 +17,20 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
 
-app = Flask(__name__)
+application = Flask(__name__)
+cors = CORS(application, resources={r"/*": {"origins": "*"}})
+SECRET_KEY = (os.environ.get("SECRET"))
 
-SECRET_KEY = 'SPARTA'
-app.secret_key = 'some_secret'
-client = MongoClient('localhost', 27017)
-# client = MongoClient('mongodb://test:test@13.124.197.195', 27017)
+# client = MongoClient('localhost', 27017)
+client = MongoClient(os.environ.get("MONGO_DB_PATH"))
 
 db = client.dbproject
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('1page2-.html')
 
-@app.route('/index')
+@application.route('/index')
 def index2():
     #return render_template('1page2-.html')
     token_receive = request.cookies.get('mytoken')
@@ -56,7 +56,7 @@ def index2():
 
 
 
-@app.route('/sign_in', methods=['POST'])
+@application.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
     username_receive = request.form['username_give']
@@ -78,14 +78,14 @@ def sign_in():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 # 로그인 페이지
-@app.route('/login', methods=['GET'])
+@application.route('/login', methods=['GET'])
 def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
 
 
 # 회원가입
-@app.route('/sign_up/save', methods=['POST'])
+@application.route('/sign_up/save', methods=['POST'])
 def sign_up():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
@@ -103,14 +103,14 @@ def sign_up():
 
 
 # 아이디 중복확인
-@app.route('/sign_up/check_dup', methods=['POST'])
+@application.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive},{'_id': False}))
     return jsonify({'result': 'success', 'exists': exists})
 
 # 마이페이지
-@app.route('/mypage', methods=['GET'])
+@application.route('/mypage', methods=['GET'])
 def mypage():
     token_receive = request.cookies.get('mytoken')
     print('mypage 서버에서 받는 토큰',token_receive)
@@ -135,7 +135,7 @@ def mypage():
 
 
 #지역별 명소 데이터 api 가져오기
-@app.route('/place',methods=['GET','POST'])
+@application.route('/place',methods=['GET','POST'])
 def show_place():
     token_receive = request.cookies.get('mytoken')
     print('2page 서버에서 받는 토큰', token_receive)
@@ -162,7 +162,7 @@ def show_place():
 
 
 #명소의 자세한 페이지
-@app.route('/detail',methods=['POST','GET'])
+@application.route('/detail',methods=['POST','GET'])
 def show_detail():
     name = request.form['name_give']
     print(name)
@@ -173,7 +173,7 @@ def show_detail():
     return {'result': places}
 
 
-@app.route('/3page',methods=['GET'])
+@application.route('/3page',methods=['GET'])
 def show_detail2():
      token_receive=request.cookies.get('mytoken')
      print('3페이지에서받은토큰',token_receive)
@@ -214,7 +214,7 @@ def get_request_query(url, operation, params, serviceKey):
     request_query = url + '/' + operation + '?' + params + '&' + 'serviceKey' + '=' + serviceKey
     return request_query
 
-@app.route('/time',methods=['GET'])
+@application.route('/time',methods=['GET'])
 def show_time():
     URL="http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService"
     OPERATION = 'getLCRiseSetInfo'
@@ -240,7 +240,7 @@ def show_time():
     return response.text
 
 
-@app.route('/reviewpage', methods=['GET'])
+@application.route('/reviewpage', methods=['GET'])
 def go_reviews():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -256,7 +256,7 @@ def go_reviews():
         return render_template("login.html")
 
 
-@app.route('/myreviewpage', methods=['GET'])
+@application.route('/myreviewpage', methods=['GET'])
 def my_reviews():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -272,7 +272,7 @@ def my_reviews():
 
 
 ## API 역할을 하는 부분
-@app.route('/reviewpage', methods=['POST'])
+@application.route('/reviewpage', methods=['POST'])
 def write_review():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -302,7 +302,7 @@ def write_review():
         return render_template("login.html")
 
 
-@app.route('/heart',methods=['POST'])
+@application.route('/heart',methods=['POST'])
 def update_heart():
     token_receive = request.cookies.get('mytoken')
     print(token_receive)
@@ -338,5 +338,6 @@ def update_heart():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("index"))
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000,debug=True)
+if __name__ == '__main__':
+    application.debug = True
+    application.run()
