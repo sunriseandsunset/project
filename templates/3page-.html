@@ -100,6 +100,9 @@
             </div>
             {%endfor%}
         </div>
+        <script>
+            $.cookie('mytoken', '{{ token }}', {path: '/reviewpage'});
+        </script>
             <a href="/reviewpage?place={{ place[0].name }}" class="more" style="color: black; font-weight: bold; font-size: 16px; margin-bottom: 2px"> 리뷰작성 및 더보기  &#9997;</a>
 
 

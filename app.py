@@ -263,9 +263,25 @@ def show_time():
 def go_reviews():
     token_receive = request.cookies.get('mytoken')
     try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         place = request.args.get('place')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         want_reviews = list(db.reviews.find({'where':place}, {'_id': False}))
-        return render_template('review.html', reviews=want_reviews,place=place)
+        return render_template('review.html', reviews=want_reviews,place=place,token=token)
+    except:
+
+        return render_template('login.html')
+
+@app.route('/myreviewpage', methods=['GET'])
+def my_reviews():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        username=user_info['username']
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        want_reviews = list(db.reviews.find({}, {'_id': False}))
+        return render_template('myreview.html', reviews=want_reviews,token=token,username=username)
     except:
 
         return render_template('login.html')

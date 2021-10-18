@@ -38,10 +38,10 @@
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="height: 45px;">
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                  <li><a href="#" class="nav-link px-1 text-dark" style="margin-right: 5px;" onclick="location.href='/'">Home</a></li>
+                  <li><a href="#" class="nav-link px-1 text-dark" style="margin-right: 5px;" onclick="home()">Home</a></li>
 <!--                  <li><a href="#" class="nav-link px-1 text-white">Features</a></li>-->
 <!--                  <li><a href="#" class="nav-link px-1 text-white">Pricing</a></li>-->
-                  <li class="right"><a href="#" class="nav-link px-1 text-white"style="margin-right: 5px;" onclick="location.href='/reviewpage'">Review</a></li>
+                  <li class="right"><a href="#" class="nav-link px-1 text-white"style="margin-right: 5px;" onclick="reviewpage()">Review</a></li>
                   <li id="my_button"><a href="#" class="nav-link px-1 text-white" onclick="mypage()">Mypage</a></li>
                 </ul>
 <!--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">-->
@@ -59,6 +59,18 @@
     </header>
 
     <script>
+        function home() {
+           $.cookie('mytoken', '{{ token }}', {path: '/index'});//토큰을 쿠키에 저장
+            $.ajax({
+                type: "GET",
+                url: "/index",
+                data: {},
+                success: function (response) {
+                    $.cookie('mytoken','{{ token }}', {path: '/index'});//토큰을 쿠키에 저장
+                    window.location.href='/index'
+                }
+            });
+        }
         function start_login() {
             $.ajax({
                     type: "GET",
@@ -80,6 +92,18 @@
                 success: function (response) {
                     $.cookie('mytoken','{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
                     window.location.href='/mypage'
+                }
+            });
+        }
+        function reviewpage() {
+            $.cookie('mytoken', '{{ token }}', {path: '/reviewpage'});//토큰을 쿠키에 저장
+            $.ajax({
+                type: "GET",
+                url: "/myreviewpage?",
+                data: {},
+                success: function (response) {
+                    $.cookie('mytoken','{{ token }}', {path: '/myreviewpage'});//토큰을 쿠키에 저장
+                    window.location.href='/myreviewpage'
                 }
             });
         }
