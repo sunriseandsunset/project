@@ -112,12 +112,36 @@
 
 
     </script>
+    <style>
+        .m-container{
+            padding: 0 50px 0 50px;
+        }
+
+        .m-review{
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin-bottom: 10px;
+            background-color: black;
+            color: white;
+        }
+
+        .m-like{
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin: 30px 0 10px 0;
+            background-color: black;
+            color: white;
+        }
+
+    </style>
 </head>
 
 <body>
         <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 style="font-weight: bold">About "{{ username }}" <span class="lead">/This is {{ username }}'s mypage .</span></h1>
+          <div class="m-container">
+            <h1 style="font-weight: bold">My Page<span class="lead">/This is {{ username }}'s mypage .</span></h1>
 
               <hr class="line-title">
               <a onclick="openclose()" id="btn-posting-box" class="btn btn-dark btn-sm" href="#" role="button">리뷰작성하기</a>
@@ -171,13 +195,13 @@
 
         </div>
 
-        <hr class="sector-line">
-        <div class="list">
-            <h3>My reviews</h3>
+<!--        <hr class="sector-line">-->
+        <div class="list" >
+            <div class="m-review"><p>My reviews</p></div>
             <div class="card-columns" id="cards-box">
 
             </div>
-            <h3>I Like</h3>
+            <div class="m-like"><p>I Like</p></div>
             <div class="card-columns" id="heart-box">
 
             </div>
