@@ -66,7 +66,7 @@ def sign_in():
     if result is not None:
         payload = {
          'id': username_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=500)  # 로그인 24시간 유지
+         'exp': datetime.utcnow() + timedelta(seconds=700)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -193,8 +193,8 @@ def show_detail2():
          #명소에 대한 정보 불러오기
          places = db.sample.find({"name": name}, {'_id': False})
          #명소에 대한 리뷰 불러오기
-         # reviews= db.reviews.find({"where": name}, {'_id': False})
-         #최신리뷰 3개만 3페이지에 나타나게
+         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+         user_info = db.users.find_one({"username": payload["id"]})
          reviews = list(db.reviews.find({"where": name}, {'_id': False}).sort([("reg_date", -1)]))
          places=list(places)
          reviews=list(reviews)
@@ -207,7 +207,7 @@ def show_detail2():
          heart_user=bool(db.heart.find_one({"place_name": name, "type": "heart", "username": payload['id']}))
 
 
-         return render_template('3page-.html',place=places,reviews=reviews,place_heart=heart_count,heart_user=heart_user)
+         return render_template('3page-.html',place=places,reviews=reviews,place_heart=heart_count,heart_user=heart_user,token=token)
 
      except :
 
@@ -301,9 +301,10 @@ def write_review():
         return render_template('login.html')
 
 
-@app.route('/heart',methods=['post'])
+@app.route('/heart',methods=['POST'])
 def update_heart():
     token_receive = request.cookies.get('mytoken')
+    print(token_receive)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
@@ -312,17 +313,21 @@ def update_heart():
         type_receive = request.form["type_give"]
         #즐겨찾기 취소인지 실행인지
         action_receive = request.form["action_give"]
+        print("하트누른곳:",place_receive)
+        print("하트누른곳:",type_receive,user_info['username'])
         doc = {
             "place_name": place_receive,
             "username": user_info["username"],
-            "type": type_receive
+            "type": type_receive,
+
         }
         if action_receive == "like":
             db.heart.insert_one(doc)
         else:
             db.heart.delete_one(doc)
 
-        count = db.heart.count_documents({"place_name": place_receive, "type": type_receive})
+        count = db.heart.count({"place_name": place_receive})
+        print(count)
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
 
 

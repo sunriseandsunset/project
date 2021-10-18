@@ -32,8 +32,10 @@
     function toggle_like(place_name, type) {
 
         console.log(place_name, type)
+        console.log(place_name)
         let $a_like = $(`#${place_name} a[aria-label='heart']`)
         let $i_like = $a_like.find("i")
+        $.cookie('mytoken', '{{ token }}', {path: '/heart'});
         if ($i_like.hasClass("fa-heart")) {
             $.ajax({
                 type: "POST",
@@ -59,6 +61,7 @@
                     action_give: "like"
                 },
                 success: function (response) {
+
                     console.log("like")
                     $i_like.addClass("fa-heart").removeClass("fa-heart-o") //빈하트를빼고 꽉찬하트를 추가
                     $a_like.find("span.like-num").text(response["count"])
@@ -162,7 +165,7 @@
         </div>
 
        <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=535068688f1a8bca1c21a9445ede0a89&libraries=services"></script>
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f84703106dbbf3c63cdc7e9b26d3533d"></script>
 <!--        <script type="text/javascript" src="/static/3page_map.js"></script>-->
         <script>
             var placeOverlay = new kakao.maps.CustomOverlay({zIndex: 1}),
