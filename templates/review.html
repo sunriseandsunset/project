@@ -1,24 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+            <!--head-->
+        {% include "include/header-meta.html" %}
 
     <title>Dear,my sun</title>
 
@@ -70,7 +55,7 @@
             function show_review(){
                 let all_reviews={{ reviews|tojson }};
                 for(let i=0;i<all_reviews.length;i++)
-                {
+                    {
                     let where=all_reviews[i]['where']
                     let upload=all_reviews[i]['upload']
                     let goreview=all_reviews[i]['review']
@@ -90,10 +75,7 @@
                                              </div>`
                     $('#cards-box').append(temp_html)
 
-
-
                 }
-
             }
 
 
@@ -102,9 +84,10 @@
 </head>
 
 <body>
+<!--        <div class="blackhead"></div>-->
         <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 style="font-weight: bold">About "{{ place }}" <span class="lead">/ The memory of that day still haunts me.</span></h1>
+          <div class="r-container">
+            <h1 style="font-weight: bold">"{{ place }}" 추억저장소 <span class="lead">/ The memory of that day still haunts me.</span></h1>
 
               <hr class="line-title">
               <a onclick="openclose()" id="btn-posting-box" class="btn btn-dark btn-sm" href="#" role="button">리뷰작성하기</a>
