@@ -1,4 +1,6 @@
 import flask
+
+
 from flask import Flask, render_template, jsonify, request,redirect,url_for,flash
 from pymongo import MongoClient
 import requests
@@ -22,6 +24,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 SECRET_KEY = 'SPARTA'
+app.secret_key = 'some_secret'
 
 # client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient("mongodb://localhost:27017/")
@@ -48,6 +51,9 @@ def index2():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    except:
+        return render_template('1page2-.html')
+
 
 
 
@@ -124,7 +130,8 @@ def mypage():
         return render_template('mypage.html', username=username,reviews=reviews,heart_place=heart_place,token=token)
 
     except (jwt.exceptions.DecodeError,jwt.ExpiredSignatureError):
-        return redirect(url_for("/"))
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
 
 
@@ -150,9 +157,12 @@ def show_place():
             places = list(places)
             return render_template('2page-swiper''.html', data=want, places=places,token=token,username=username)
     except (jwt.exceptions.DecodeError,jwt.ExpiredSignatureError):
-        return redirect(url_for("/"))
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
-
+    except:
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
 
 #명소의 자세한 페이지
@@ -197,9 +207,9 @@ def show_detail2():
          return render_template('3page-.html',place=places,reviews=reviews,place_heart=heart_count,heart_user=heart_user,token=token,username=username)
 
      except :
+         flash('로그인을 해주세요!')
+         return render_template("login.html")
 
-
-         return render_template('login.html')
 
 #공공데이터 api query url 만드는함수
 def get_request_query(url, operation, params, serviceKey):
@@ -246,8 +256,9 @@ def go_reviews():
         want_reviews = list(db.reviews.find({'where':place}, {'_id': False}))
         return render_template('review.html', reviews=want_reviews,place=place,token=token,username=username)
     except:
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
-        return render_template('login.html')
 
 @app.route('/myreviewpage', methods=['GET'])
 def my_reviews():
@@ -260,8 +271,9 @@ def my_reviews():
         want_reviews = list(db.reviews.find({}, {'_id': False}))
         return render_template('myreview.html', reviews=want_reviews,token=token,username=username)
     except:
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
-        return render_template('login.html')
 
 ## API 역할을 하는 부분
 @app.route('/reviewpage', methods=['POST'])
@@ -290,7 +302,8 @@ def write_review():
 
         return jsonify({'msg': '저장완료!'})
     except:
-        return render_template('login.html')
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
 
 
 @app.route('/heart',methods=['POST'])
