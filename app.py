@@ -17,17 +17,13 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
 
-
-
-
-
 app = Flask(__name__)
 
 SECRET_KEY = 'SPARTA'
 app.secret_key = 'some_secret'
+client = MongoClient('localhost', 27017)
+# client = MongoClient('mongodb://test:test@13.124.197.195', 27017)
 
-# client = MongoClient('mongodb://test:test@localhost', 27017)
-client = MongoClient("mongodb://localhost:27017/")
 db = client.dbproject
 
 @app.route('/')
@@ -42,7 +38,7 @@ def index2():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.users.find_one({"username": payload["id"]},)
         username=user_info['username']
         popular = list(db.sample.find({}, {'_id': False}).sort([("heart_count", -1)]).limit(5))
         print(popular)
@@ -76,7 +72,7 @@ def sign_in():
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success','token': token})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
@@ -110,7 +106,7 @@ def sign_up():
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
-    exists = bool(db.users.find_one({"username": username_receive}))
+    exists = bool(db.users.find_one({"username": username_receive},{'_id': False}))
     return jsonify({'result': 'success', 'exists': exists})
 
 # 마이페이지
@@ -121,7 +117,7 @@ def mypage():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.users.find_one({"username": payload["id"]},{'_id': False})
         username=user_info['username']
         reviews = list(db.reviews.find({"writer": username}, {'_id': False}).sort([("reg_date", -1)]))
         #사용자가 찜한 하트보기
@@ -146,7 +142,7 @@ def show_place():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.users.find_one({"username": payload["id"]},{'_id': False})
         username=user_info['username']
         # 선택한지역 넘겨주기
         if request.method == 'POST':
@@ -190,7 +186,7 @@ def show_detail2():
          #명소에 대한 리뷰 불러오기
          token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-         user_info = db.users.find_one({"username": payload["id"]})
+         user_info = db.users.find_one({"username": payload["id"]},{'_id': False})
          username = user_info['username']
          reviews = list(db.reviews.find({"where": name}, {'_id': False}).sort([("reg_date", -1)]))
          places=list(places)
