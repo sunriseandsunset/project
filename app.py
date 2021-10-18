@@ -40,10 +40,8 @@ def index2():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         user_info = db.users.find_one({"username": payload["id"]})
-        usernane=user_info['username']
-        print(usernane)
-
-        return render_template('1page2-.html', username=usernane,token=token)
+        username=user_info['username']
+        return render_template('1page2-.html', username=username,token=token)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -140,7 +138,7 @@ def show_place():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         user_info = db.users.find_one({"username": payload["id"]})
-
+        username=user_info['username']
         # 선택한지역 넘겨주기
         if request.method == 'POST':
             want = request.form.get('inputGroupSelect04')
@@ -148,26 +146,11 @@ def show_place():
             places = db.sample.find({"area": want}, {'_id': False})
 
             places = list(places)
-            return render_template('2page-swiper''.html', data=want, places=places,token=token)
+            return render_template('2page-swiper''.html', data=want, places=places,token=token,username=username)
     except (jwt.exceptions.DecodeError,jwt.ExpiredSignatureError):
         return redirect(url_for("/"))
 
-    #     return render_template('2page-swiper''.html', data=want, places=places)
 
-    # token_receive = request.cookies.get('search_token')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    #
-    #     #선택한지역 넘겨주기
-    #     if request.method == 'POST':
-    #         want = request.form.get('inputGroupSelect04')
-    #         #print(want)
-    #         places = db.sample.find({"area": want}, {'_id': False})
-    #
-    #         places=list(places)
-    #
-    #         return render_template('2page-swiper''.html',data=want,places=places)
-    # except:
 
 
 #명소의 자세한 페이지
@@ -194,7 +177,9 @@ def show_detail2():
          places = db.sample.find({"name": name}, {'_id': False})
          #명소에 대한 리뷰 불러오기
          token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
          user_info = db.users.find_one({"username": payload["id"]})
+         username = user_info['username']
          reviews = list(db.reviews.find({"where": name}, {'_id': False}).sort([("reg_date", -1)]))
          places=list(places)
          reviews=list(reviews)
@@ -207,23 +192,11 @@ def show_detail2():
          heart_user=bool(db.heart.find_one({"place_name": name, "type": "heart", "username": payload['id']}))
 
 
-         return render_template('3page-.html',place=places,reviews=reviews,place_heart=heart_count,heart_user=heart_user,token=token)
+         return render_template('3page-.html',place=places,reviews=reviews,place_heart=heart_count,heart_user=heart_user,token=token,username=username)
 
      except :
 
-         # name = request.args.get('name')
-         # print(name)
-         # # 명소에 대한 정보 불러오기
-         # places = db.sample.find({"name": name}, {'_id': False})
-         # # 명소에 대한 리뷰 불러오기
-         # # reviews= db.reviews.find({"where": name}, {'_id': False})
-         # # 최신리뷰 3개만 3페이지에 나타나게
-         # reviews = list(db.reviews.find({"where": name}, {'_id': False}).sort([("reg_date", -1)]))
-         # places = list(places)
-         # reviews = list(reviews)
-         # if len(reviews) > 3:
-         #     reviews = reviews[0:3]
-         # flash('로그인을 해주세요!')
+
          return render_template('login.html')
 
 #공공데이터 api query url 만드는함수
@@ -265,9 +238,11 @@ def go_reviews():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         place = request.args.get('place')
+        user_info = db.users.find_one({"username": payload["id"]})
+        username = user_info['username']
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         want_reviews = list(db.reviews.find({'where':place}, {'_id': False}))
-        return render_template('review.html', reviews=want_reviews,place=place,token=token)
+        return render_template('review.html', reviews=want_reviews,place=place,token=token,username=username)
     except:
 
         return render_template('login.html')

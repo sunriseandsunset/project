@@ -53,6 +53,13 @@
                           onclick="start_login()">
                   Login</button>
                 </div>
+
+                  {% if username %}
+                  <div style="float: right">
+                      <li id="user"><a href="#" class="nav-link px-1 text-white">{{ username }}</a></li>
+                  </div>
+                  {%endif%}
+
               </div>
             </div>
 

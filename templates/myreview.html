@@ -37,8 +37,10 @@
             let review = $('#review').val()
 
             //파일경로에서 fakepath없애기
+
             let filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
             console.log(filename)
+            $.cookie('mytoken','{{ token }}', {path: '/reviewpage'});//토큰을 쿠키에 저장
 
             $.ajax({
                     type: "POST",
