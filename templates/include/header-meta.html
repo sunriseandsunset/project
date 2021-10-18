@@ -50,7 +50,7 @@
 
                 <div class="text-end">
                   <button type="button" class="btn btn-dark me-2 btn-sm" style="width: 80px; height: 30px;"
-                          onclick="start_login()">
+                          onclick="start_login()" id="login">
                   Login</button>
                 </div>
 
@@ -58,6 +58,13 @@
                   <div style="margin-left: 620px;">
                       <li id="user"><a href="#" class="text-white">{{ username }} <span style="font-size: 15px; color: dimgrey">님, 환영합니다! </span></a></li>
                   </div>
+                  <script>
+                      $('#login').hide()
+                      </script>
+                  {% else %}
+                  <script>
+                        $('#login').show()
+                  </script>
                   {%endif%}
 
               </div>
