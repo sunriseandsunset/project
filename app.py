@@ -41,7 +41,9 @@ def index2():
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         user_info = db.users.find_one({"username": payload["id"]})
         username=user_info['username']
-        return render_template('1page2-.html', username=username,token=token)
+        popular = list(db.sample.find({}, {'_id': False}).sort([("heart_count", -1)]).limit(5))
+        print(popular)
+        return render_template('1page2-.html', username=username,token=token,places=popular)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -272,16 +274,15 @@ def write_review():
         username=user_info['username']
         title_receive=request.form['title_give']
         where_receive = request.form['where_give']
-        upload_receive = request.form['upload_give']
-        print(upload_receive)
+
         review_receive = request.form['review_give']
-        image_url='https://sparta-forposting.s3.ap-northeast-2.amazonaws.com/'+upload_receive
+
 
         doc = {
             'writer':username,
             'where':where_receive,
             'title':title_receive,
-            'upload':image_url,
+
             'review':review_receive,
             'reg_date': datetime.now(),
         }
@@ -303,6 +304,9 @@ def update_heart():
         place_receive = request.form["place_give"]
         type_receive = request.form["type_give"]
         #즐겨찾기 취소인지 실행인지
+        place = db.sample.find_one({"name": place_receive})
+        heart=place['heart_count']+1
+        db.sample.update_one({"name": place_receive}, {'$set': {'heart_count':heart}})
         action_receive = request.form["action_give"]
         print("하트누른곳:",place_receive)
         print("하트누른곳:",type_receive,user_info['username'])

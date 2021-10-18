@@ -33,7 +33,6 @@
 <!--                <button class="login"> Log in </button>-->
 
                     <form action = "/place" method = "POST" name="selectarea">
-
                         <script>
                             $.cookie('mytoken', '{{ token }}', {path: '/place'});//토큰을 쿠키에 저장
                         </script>
@@ -71,40 +70,20 @@
         <div class="title_box">
             <p>이번주 인기명소 Top 5</p>
         </div>
+
         <div class="place">
             <div class="fictures">
-                <div class="ficture 1st">
-                    <img src="https://cdn.pixabay.com/photo/2018/06/02/17/50/forest-3448818__340.jpg" alt="ficture">
-                    <div class="ment">
-                       아이디 : kimbuja <br> 위치 : 이 세상 어딘가
+                {% for place in places %}
+                <div class="fictures">
+                    <div class="ficture 1st">
+                        <img src="{{ place['image'] }}" alt="ficture">
+                        <div class="ment">
+                           <strong>{{ place.name }}</strong> <br> {{ place.area }}
+                        </div>
                     </div>
-                </div>
-                <div class="ficture 2nd">
-                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
                     </div>
-                </div>
-                <div class="ficture 3nd">
-                    <img src="https://cdn.pixabay.com/photo/2019/12/17/10/15/sun-4701316__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
-                    </div>
-                </div>
-                <div class="ficture 4nd">
-                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
-                    </div>
-                </div>
-                <div class="ficture 5nd">
-                    <img src="https://cdn.pixabay.com/photo/2019/08/26/22/02/meadow-4432944__340.jpg" alt="ficture">
-                    <div class="ment">
-                        아이디 : kimbuja <br> 위치 : 이 세상 어딘가
-                    </div>
-                </div>
+                {% endfor %}
 
-            </div>
         </div>
 
 </body>

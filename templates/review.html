@@ -36,14 +36,11 @@
             let where = $('#where').val()
             let review = $('#review').val()
 
-            //파일경로에서 fakepath없애기
-            let filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
-            console.log(filename)
 
             $.ajax({
                     type: "POST",
                     url: "/reviewpage",
-                    data: {title_give:review_title,where_give:where,upload_give:filename,review_give:review},
+                    data: {title_give:review_title,where_give:where,review_give:review},
                     success: function (response) { // 성공하면
                         alert(response["msg"]);
                         window.location.reload();
@@ -57,16 +54,14 @@
                 for(let i=0;i<all_reviews.length;i++)
                     {
                     let where=all_reviews[i]['where']
-                    let upload=all_reviews[i]['upload']
+
                     let goreview=all_reviews[i]['review']
                     let place_title=all_reviews[i]['title']
 
 
 
                     let temp_html = `<div class="card">
-                                                 <img class="card-img-top"
-                                                      src="${upload}"
-                                                      alt="Card image cap">
+
                                                  <div class="card-body">
                                                      <a target="_blank" href="" class="card-title">${place_title}</a>
                                                      <p class="card-text">${goreview}</p>
@@ -127,12 +122,12 @@
             </div>
 
 
-            <div class="form-group">
-                <input id="files" type="file" />
-                <button id="button">사진 업로드</button>
-                <script src="/static/app.js"></script>
-                <script src="/static/file_upload.js"></script>
-            </div>
+<!--            <div class="form-group">-->
+<!--                <input id="files" type="file" />-->
+<!--                <button id="button">사진 업로드</button>-->
+<!--                <script src="/static/app.js"></script>-->
+<!--                <script src="/static/file_upload.js"></script>-->
+<!--            </div>-->
             <div>
                 <label>리뷰 내용</label>
                 <textarea class="form-control" id="review" rows="3"></textarea>
