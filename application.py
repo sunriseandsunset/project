@@ -20,8 +20,8 @@ application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
 # SECRET_KEY = os.environ.get("SECRET_KEY")
 SECRET_KEY = 'SPARTA'
-# client = MongoClient('localhost', 27017)
-client = MongoClient(os.environ.get("MONGO_DB_PATH"))
+client = MongoClient('mongodb://test:test@13.124.197.195')
+# client = MongoClient(os.environ.get("MONGO_DB_PATH"))
 
 db = client.dbproject
 
