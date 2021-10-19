@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 
 application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
-SECRET_KEY = (os.environ.get("SECRET"))
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # client = MongoClient('localhost', 27017)
 client = MongoClient(os.environ.get("MONGO_DB_PATH"))
