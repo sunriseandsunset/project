@@ -110,7 +110,7 @@
             });
         }
         function reviewpage() {
-            $.cookie('mytoken', '{{ token }}', {path: '/reviewpage'});//토큰을 쿠키에 저장
+            $.cookie('mytoken', '{{ token }}', {path: '/myreviewpage'});//토큰을 쿠키에 저장
             $.ajax({
                 type: "GET",
                 url: "/myreviewpage?",
