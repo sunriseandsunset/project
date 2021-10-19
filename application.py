@@ -24,7 +24,6 @@ client = MongoClient(os.environ.get("MONGO_DB_PATH"))
 
 db = client.dbproject
 
-
 @application.route('/')
 def index():
     return render_template('1page2-.html')
