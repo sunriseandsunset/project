@@ -20,10 +20,9 @@ from datetime import datetime, timedelta
 application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
 SECRET_KEY = os.environ.get("SECRET_KEY")
+client = MongoClient(os.environ.get("MONGO_DB_PATH"))
 # SECRET_KEY = 'SPARTA'
 # client = MongoClient('mongodb://test:test@13.124.197.195')
-client = MongoClient(os.environ.get("MONGO_DB_PATH"))
-
 db = client.dbproject
 
 
@@ -65,7 +64,7 @@ def sign_in():
     if result is not None:
         payload = {
             'id': username_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=700)  # 로그인 24시간 유지
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -125,6 +124,9 @@ def mypage():
         return render_template('mypage.html', username=username, reviews=reviews, heart_place=heart_place, token=token)
 
     except (jwt.exceptions.DecodeError, jwt.ExpiredSignatureError):
+        flash('로그인을 해주세요!')
+        return render_template("login.html")
+    except :
         flash('로그인을 해주세요!')
         return render_template("login.html")
 
