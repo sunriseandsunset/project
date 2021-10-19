@@ -97,6 +97,7 @@
                 });
         }
 
+
         function mypage() {
             $.cookie('mytoken', '{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
             $.ajax({
