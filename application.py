@@ -16,6 +16,7 @@ import hashlib
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
+
 application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
 SECRET_KEY = os.environ.get("SECRET_KEY")

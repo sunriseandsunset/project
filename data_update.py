@@ -7,6 +7,7 @@ import os
 client = MongoClient(os.environ.get("MONGO_DB_PATH"))
 
 
+
 db = client.dbproject
 
 places = [
