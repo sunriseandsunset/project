@@ -31,6 +31,12 @@
     body{
          font-family: "Helvetica Nene", Helvetica, Arial, 맑은 고딕;,"malgun gothic", sans-serif;
      }
+    li {
+        list-style: none;
+    }
+    a {
+        text-decoration: none;
+    }
     </style>
 
     <header class="p-1 bg-warning text-white" style="border-bottom:5px solid black;">
@@ -97,6 +103,7 @@
                 });
         }
 
+
         function mypage() {
             $.cookie('mytoken', '{{ token }}', {path: '/mypage'});//토큰을 쿠키에 저장
             $.ajax({
@@ -110,7 +117,7 @@
             });
         }
         function reviewpage() {
-            $.cookie('mytoken', '{{ token }}', {path: '/reviewpage'});//토큰을 쿠키에 저장
+            $.cookie('mytoken', '{{ token }}', {path: '/myreviewpage'});//토큰을 쿠키에 저장
             $.ajax({
                 type: "GET",
                 url: "/myreviewpage?",
